@@ -1,13 +1,13 @@
 <template>
   <main class="container">
     <h2>訂單明細</h2>
-    <br />
+    <br/>
 
     <h7 class="subtitle">
-      訂單編號：{{ x }}<br />
-      訂購日期：{{ formatDate(y) }}<br />
+      訂單編號：{{ x }}<br/>
+      訂購日期：{{ formatDate(y) }}<br/>
     </h7>
-    <br />
+    <br/>
 
     <!-- 移到表格外部 -->
     <button type="button" class="btn btn-primary btn-add" @click="openInsertModal">
@@ -16,69 +16,56 @@
 
     <table class="table table-striped table-hover">
       <thead>
-        <tr class="text-center">
-          <th scope="col">訂單編號</th>
-          <th scope="col">產品名稱</th>
-          <th scope="col">顏色</th>
-          <th scope="col">訂購數量</th>
-          <th scope="col">價格</th>
-          <th scope="col">修改</th>
-          <th scope="col">註銷</th>
-        </tr>
+      <tr class="text-center">
+        <th scope="col">訂單編號</th>
+        <th scope="col">產品名稱</th>
+        <th scope="col">顏色</th>
+        <th scope="col">訂購數量</th>
+        <th scope="col">價格</th>
+        <th scope="col">修改</th>
+        <th scope="col">刪除</th>
+      </tr>
       </thead>
       <tbody>
-        <tr
+      <tr
           v-for="odDTO in filteredOrdersDetailDTOs"
           :key="odDTO.ordersDetailId"
           class="text-center"
-        >
-          <td>{{ odDTO.orderId }}</td>
-          <td>{{ odDTO.productName }}</td>
-          <td>{{ odDTO.color }}</td>
-          <td>{{ odDTO.quantity }}</td>
-          <td>{{ odDTO.price }}</td>
-          <!-- <td>
-            <button @click="redirectToOrdersDetail(o)">
-              <i class="fas fa-list"></i>
-            </button>
-          </td> -->
-          <td>
-            <button @click="openEditModal(o)">
-              <i class="fas fa-pen"></i>
-            </button>
-          </td>
-          <td>
-            <button @click="changeOrderStatus(o.orderId)">
-              <i class="fas fa-check"></i>
-            </button>
-            <!-- <button v-else @click="changeSalesStatus(product.productId)">
-              <i class="fas fa-xmark"></i>
-            </button> -->
-          </td>
-          <!-- <td>
-            <button class="btn btn-primary" @click="reorderByOrderId(o)">
-              重新下單
-            </button>
-          </td>
-          <td>
-            <button @click="openInsertModal">編輯訂單</button>
-          </td> -->
-        </tr>
+      >
+        <td>{{ odDTO.orderId }}</td>
+        <td>{{ odDTO.productName }}</td>
+        <td>{{ odDTO.color }}</td>
+        <td>{{ odDTO.quantity }}</td>
+        <td>{{ odDTO.price }}</td>
+        <td>
+          <button @click="openEditModal(odDTO)">
+            <i class="fas fa-pen"></i>
+          </button>
+        </td>
+        <td>
+          <button @click="deleteOrdersDetail(odDTO)">
+            <i class="fas fa-trash"></i>
+          </button>
+          <!-- <button v-else @click="changeSalesStatus(product.productId)">
+            <i class="fas fa-xmark"></i>
+          </button> -->
+        </td>
+      </tr>
       </tbody>
     </table>
   </main>
 
-  <!-- Modal -->
+  <!-- 新增訂單明細Modal -->
   <div class="modal" tabindex="-1" role="dialog" ref="insertModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">新增訂單明細</h5>
           <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            @click="closeInsertModal"
+              type="button"
+              class="close"
+              aria-label="Close"
+              @click="closeInsertModal"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -88,43 +75,46 @@
             <div class="form-group">
               <label for="specId">產品規格編號</label>
               <input
-                type="text"
-                class="form-control"
-                id="specId" 
-                v-model="NewOrdersDetail.specId"
+                  type="text"
+                  class="form-control"
+                  id="specId"
+                  v-model="NewOrdersDetail.specId"
               />
             </div>
+            <br/>
             <div class="form-group">
               <label for="quantity">訂購數量</label>
               <input
-                type="text"
-                class="form-control"
-                id="quantity" 
-                v-model="NewOrdersDetail.quantity"
+                  type="text"
+                  class="form-control"
+                  id="quantity"
+                  v-model="NewOrdersDetail.quantity"
               />
             </div>
+            <br/>
             <div class="form-group">
               <label for="price">產品單價</label>
               <input
-                type="text"
-                class="form-control"
-                id="price" 
-                v-model="NewOrdersDetail.price"
+                  type="text"
+                  class="form-control"
+                  id="price"
+                  v-model="NewOrdersDetail.price"
               />
             </div>
+            <br/>
             <div class="d-flex justify-content-end">
               <!-- 新添加的 div -->
               <button
-                type="button"
-                class="btn btn-secondary"
-                @click="closeInsertModal"
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="closeInsertModal"
               >
                 Close
               </button>
               <button
-                type="submit"
-                class="btn btn-primary ml-2"
-                @click="saveOrder"
+                  type="submit"
+                  class="btn btn-primary ml-2"
+                  @click="saveOrdersDetail"
               >
                 Save
               </button>
@@ -135,6 +125,78 @@
       </div>
     </div>
   </div>
+
+  <!-- 修改訂單明細Modal -->
+  <div class="modal" tabindex="-1" role="dialog" ref="editModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">修改訂單明細</h5>
+          <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              @click="closeEditModal"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="specId">產品規格編號</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="specId"
+                  v-model="NewOrdersDetail.specId"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="quantity">訂購數量</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="quantity"
+                  v-model="NewOrdersDetail.quantity"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="price">產品單價</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="price"
+                  v-model="NewOrdersDetail.price"
+              />
+            </div>
+            <br/>
+            <div class="d-flex justify-content-end">
+              <!-- 新添加的 div -->
+              <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="closeEditModal"
+              >
+                Close
+              </button>
+              <button
+                  type="submit"
+                  class="btn btn-primary ml-2"
+                  @click="saveEditedOrdersDetail"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -147,8 +209,8 @@ export default {
       y: this.$route.query.y,
       ordersDetailDTOs: [],
       NewOrdersDetail: {
-        // ordersDetailId: "",
-        orderId:'',
+        ordersDetailId: '',
+        orderId: '',
         specId: '',
         quantity: '',
         price: '',
@@ -169,56 +231,66 @@ export default {
       return dateTime.toLocaleString("zh-TW", options);
     },
 
-    // redirectToOrdersDetail(o) {
-    //   this.$router.push({
-    //     path: "/orders/detail",
-    //     query: {
-          // x: o.orderId,
-          // y: product.productName,
-          // z: product.price,
-    //     },
-    //   });
-    // },
-
-    // reorderByOrderId(order) {
-    //   if (confirm("您確定要重新下單嗎？")) {
-    //     console.log("orderId:", order.orderId);
-    //     axios
-    //       .post(`${this.API_URL}/api/orders/reorder?orderId=${order.orderId}`)
-    //       .then((response) => {
-    //         console.log(response.data);
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error:", error);
-    //       });
-    //   } else {
-    //     console.log("取消"); //如果用戶取消重新下單動作，則不執行重新下單邏輯
-    //   }
-    // },
-
-    saveOrder() {
+    saveOrdersDetail() {
       if (confirm("您確定要儲存這項資料嗎？")) {
         this.NewOrdersDetail.orderId = this.x
         console.log('New OrdersDetail:', this.NewOrdersDetail);
-        axios.post(`${this.API_URL}/api/orders/insertOrdersDetail`, this.NewOrdersDetail)
-          .then(response => {
-            this.resetFormData(); //清空表單數據
-            console.log(response.data);
-            // this.fetchData(); //→這句的目的是什麼？
-            this.closeInsertModal();
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+        axios.post(`${this.API_URL}/orders/insertOrdersDetail`, this.NewOrdersDetail)
+            .then(response => {
+              this.resetFormData(); //清空表單數據
+              console.log(response.data);
+              // this.fetchData(); //→這句的目的是什麼？
+              this.closeInsertModal();
+              this.$router.go();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
       } else {
         // 如果用戶取消保存操作，則不執行保存邏輯
         console.log('取消保存');
       }
     },
 
+    saveEditedOrdersDetail() {
+      if (confirm("您確定要儲存這次的編輯嗎？")) {
+        this.NewOrdersDetail.orderId = this.x
+        console.log('New OrdersDetail:', this.NewOrdersDetail);
+        axios
+            .put(`${this.API_URL}/orders/updateOrdersDetail/${this.NewOrdersDetail.ordersDetailId}`, this.NewOrdersDetail)
+            .then((response) => {
+              this.resetFormData(); //清空表單數據
+              console.log(response.data);
+              // this.fetchData();
+              this.closeEditModal();
+              this.$router.go();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+      } else {
+        // 如果用戶取消保存操作，則不執行保存邏輯
+        console.log("取消保存");
+      }
+    },
+
+    deleteOrdersDetail(odDTO) {
+      if (confirm("您確定要刪除這筆明細嗎？")) {
+        axios.delete(`${this.API_URL}/orders/deleteOrdersDetail/${odDTO.ordersDetailId}`)
+            .then(response => {
+              this.ordersDetailDTOs = this.ordersDetailDTOs.filter(ordersDetail => ordersDetail !== odDTO);
+              console.log('刪除成功');
+              this.$router.go();
+            })
+            .catch(error => {
+              console.error('Error deleting product:', error);
+            });
+      }
+    },
+
     resetFormData() {
       this.NewOrdersDetail = {
-        // ordersDetailId: "",
+        ordersDetailId: '',
         orderId: '',
         specId: '',
         quantity: '',
@@ -236,16 +308,51 @@ export default {
       this.$refs.insertModal.classList.remove("show");
       this.$refs.insertModal.style.display = "none";
       document.body.classList.remove("modal-open");
+      this.resetFormData();
+    },
+
+    openEditModal(odDTO) {
+      this.$refs.editModal.classList.add("show");
+      this.$refs.editModal.style.display = "block";
+      document.body.classList.add("modal-open");
+      this.NewOrdersDetail.ordersDetailId = odDTO.ordersDetailId;
+      this.NewOrdersDetail.specId = odDTO.specId;
+      this.NewOrdersDetail.quantity = odDTO.quantity;
+      this.NewOrdersDetail.price = odDTO.price;
+    },
+
+    closeEditModal() {
+      this.$refs.editModal.classList.remove("show");
+      this.$refs.editModal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      this.resetFormData();
     },
   },
 
   mounted() {
+    const loggedInMember = sessionStorage.getItem('loggedInMember');
+    const loggedInMemberObject = JSON.parse(loggedInMember);
+    console.log(loggedInMemberObject);
+    if (loggedInMemberObject === null) {
+      alert('請先登入');
+      this.$router.push('/login');
+    } else {
+      const role = loggedInMemberObject.authentication;
+      console.log(role);
+      if (role == '1' || role == '0') {
+        // alert('歡迎回來，管理者!!');
+      } else {
+        alert('權限不足');
+        this.$router.push('/');
+      }
+    }
+
     axios
-      .get(`${this.API_URL}/api/orders/findAllOrdersDetailDTOs`)
-      .then((rs) => {
-        console.log(rs.data);
-        this.ordersDetailDTOs = rs.data;
-      });
+        .get(`${this.API_URL}/orders/findAllOrdersDetailDTOs`)
+        .then((rs) => {
+          console.log(rs.data);
+          this.ordersDetailDTOs = rs.data;
+        });
   },
 
   computed: {
@@ -253,7 +360,7 @@ export default {
       const specificOrderId = this.x;
       // 使用 Array.prototype.filter 方法來過濾資料
       return this.ordersDetailDTOs.filter(
-        (odDTO) => odDTO.orderId == specificOrderId
+          (odDTO) => odDTO.orderId == specificOrderId
       );
     },
   },

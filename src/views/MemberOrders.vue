@@ -1,63 +1,69 @@
 <template>
   <main class="container">
     <h2>訂單管理</h2>
-    <br />
+    <br/>
 
     <!-- 移到表格外部 -->
     <button
-      type="button"
-      class="btn btn-primary btn-add"
-      @click="openInsertModal"
+        type="button"
+        class="btn btn-primary btn-add"
+        @click="openInsertModal"
     >
       新增
     </button>
 
+    <input
+        type="text"
+        v-model="searchTerm"
+        class="form-control"
+        placeholder="搜尋訂單"
+    />
+    <br/>
+
     <table class="table table-striped table-hover">
       <thead>
-        <tr class="text-center">
-          <th scope="col">訂單編號</th>
-          <th scope="col">訂購日期</th>
-          <th scope="col">訂單狀態</th>
-          <th scope="col">送貨地址</th>
-          <th scope="col">收件人姓名</th>
-          <th scope="col">收件人手機</th>
-          <th scope="col">明細</th>
-          <th scope="col">修改</th>
-          <th scope="col">註銷</th>
-        </tr>
+      <tr class="text-center">
+        <th scope="col">訂單編號</th>
+        <th scope="col">訂購日期</th>
+        <th scope="col">訂單狀態</th>
+        <th scope="col">送貨地址</th>
+        <th scope="col">收件人姓名</th>
+        <th scope="col">收件人手機</th>
+        <th scope="col">明細</th>
+        <th scope="col">修改</th>
+        <!-- <th scope="col">註銷</th> -->
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="o in orders" :key="o.orderId" class="text-center">
-          <td>{{ o.orderId }}</td>
-          <td>{{ formatDate(o.orderDate) }}</td>
-          <td>{{ o.orderStatus }}</td>
-          <td>{{ o.deliverAddress }}</td>
-          <td>{{ o.recipientName }}</td>
-          <td>{{ o.recipientPhone }}</td>
-          <td>
-            <button @click="redirectToOrdersDetail(o)">
-              <i class="fas fa-list"></i>
-            </button>
-          </td>
-          <td>
-            <button @click="openEditModal(o)">
-              <i class="fas fa-pen"></i>
-            </button>
-          </td>
-          <td>
-            <button @click="changeOrderStatus(o.orderId)">
-              <i class="fas fa-check"></i>
-            </button>
-            <!-- <button v-else @click="changeSalesStatus(product.productId)">
-              <i class="fas fa-xmark"></i>
-            </button> -->
-          </td>
-          <!-- <td>
-            <button class="btn btn-primary" @click="reorderByOrderId(o)">
-              重新下單
-            </button>
-          </td> -->
-        </tr>
+      <tr v-for="order in filteredOrders" :key="order.orderId" class="text-center">
+        <td>{{ order.orderId }}</td>
+        <td>{{ formatDate(order.orderDate) }}</td>
+        <td>{{ order.orderStatus }}</td>
+        <!-- <td>
+          <select
+            v-model="newstatus"
+            @change="updateOrderStatus(order.orderId, order.orderStatus)"
+          >
+            <option v-for="status in statuses" :value="status">
+              {{ status }}
+            </option>
+          </select>
+        </td> -->
+        <td>{{ order.deliverAddress }}</td>
+        <td>{{ order.recipientName }}</td>
+        <td>{{ order.recipientPhone }}</td>
+        <td>
+          <button @click="redirectToOrdersDetail(order)">
+            <i class="fas fa-list"></i>
+          </button>
+        </td>
+        <td>
+          <button @click="openEditModal(order)">
+            <i class="fas fa-pen"></i>
+          </button>
+        </td>
+        <td></td>
+      </tr>
       </tbody>
     </table>
   </main>
@@ -69,10 +75,10 @@
         <div class="modal-header">
           <h5 class="modal-title">新增訂單</h5>
           <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            @click="closeInsertModal"
+              type="button"
+              class="close"
+              aria-label="Close"
+              @click="closeInsertModal"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -80,108 +86,118 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipientName">會員編號</label>
+              <label for="userId">會員編號</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.userId"
+                  type="text"
+                  class="form-control"
+                  id="userId"
+                  v-model="NewOrder.userId"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">訂購日期</label>
+              <label for="orderDate">訂購日期</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.orderDate"
+                  type="text"
+                  class="form-control"
+                  id="orderDate"
+                  v-model="NewOrder.orderDate"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">付款方式</label>
+              <label for="paymentMethod">付款方式</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.paymentMethod"
+                  type="text"
+                  class="form-control"
+                  id="paymentMethod"
+                  v-model="NewOrder.paymentMethod"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">訂單狀態</label>
+              <label for="orderStatus">訂單狀態</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.orderStatus"
+                  type="text"
+                  class="form-control"
+                  id="orderStatus"
+                  v-model="NewOrder.orderStatus"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">寄送日期</label>
+              <label for="deliverDate">寄送日期</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.deliverDate"
+                  type="text"
+                  class="form-control"
+                  id="deliverDate"
+                  v-model="NewOrder.deliverDate"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">收件日期</label>
+              <label for="pickupDate">收件日期</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.pickupDate"
+                  type="text"
+                  class="form-control"
+                  id="pickupDate"
+                  v-model="NewOrder.pickupDate"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">送貨地址</label>
+              <label for="deliverAddress">送貨地址</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.deliverAddress"
+                  type="text"
+                  class="form-control"
+                  id="deliverAddress"
+                  v-model="NewOrder.deliverAddress"
               />
             </div>
+            <br/>
             <div class="form-group">
               <label for="recipientName">收件人姓名</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.recipientName"
+                  type="text"
+                  class="form-control"
+                  id="recipientName"
+                  v-model="NewOrder.recipientName"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">收件人手機</label>
+              <label for="recipientPhone">收件人手機</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.recipientPhone"
+                  type="text"
+                  class="form-control"
+                  id="recipientPhone"
+                  v-model="NewOrder.recipientPhone"
               />
             </div>
+            <br/>
             <div class="form-group">
-              <label for="recipientName">付款日期</label>
+              <label for="paymentTime">付款日期</label>
               <input
-                type="text"
-                class="form-control"
-                id="recipientName"
-                v-model="NewOrder.paymentTime"
+                  type="text"
+                  class="form-control"
+                  id="paymentTime"
+                  v-model="NewOrder.paymentTime"
               />
             </div>
+            <br/>
             <div class="d-flex justify-content-end">
               <!-- 新添加的 div -->
               <button
-                type="button"
-                class="btn btn-secondary"
-                @click="closeInsertModal"
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="closeInsertModal"
               >
                 Close
               </button>
               <button
-                type="submit"
-                class="btn btn-primary ml-2"
-                @click="saveOrder"
+                  type="submit"
+                  class="btn btn-primary ml-2"
+                  @click="saveOrder"
               >
                 Save
               </button>
@@ -193,11 +209,151 @@
     </div>
   </div>
 
-
-
-
-
-  
+  <!-- 修改訂單Modal -->
+  <div class="modal" tabindex="-1" role="dialog" ref="editModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">修改訂單</h5>
+          <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              @click="closeEditModal"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <!-- <div class="form-group">
+              <label for="userId">會員編號</label>
+              <input
+                type="text"
+                class="form-control"
+                id="userId"
+                v-model="NewOrder.userId"
+              />
+            </div> -->
+            <div class="form-group">
+              <label for="orderDate">訂購日期</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="orderDate"
+                  v-model="NewOrder.orderDate"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="paymentMethod">付款方式</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="paymentMethod"
+                  v-model="NewOrder.paymentMethod"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="orderStatus">訂單狀態</label>
+              <br/>
+              <select v-model="NewOrder.orderStatus">
+                <option v-for="status in statuses" :value="status">
+                  {{ status }}
+                </option>
+              </select>
+              <!-- <input
+                type="text"
+                class="form-control"
+                id="orderStatus"
+                v-model="NewOrder.orderStatus"
+              /> -->
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="deliverDate">寄送日期</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="deliverDate"
+                  v-model="NewOrder.deliverDate"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="pickupDate">收件日期</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="pickupDate"
+                  v-model="NewOrder.pickupDate"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="deliverAddress">送貨地址</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="deliverAddress"
+                  v-model="NewOrder.deliverAddress"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="recipientName">收件人姓名</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="recipientName"
+                  v-model="NewOrder.recipientName"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="recipientPhone">收件人手機</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="recipientPhone"
+                  v-model="NewOrder.recipientPhone"
+              />
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="paymentTime">付款日期</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="paymentTime"
+                  v-model="NewOrder.paymentTime"
+              />
+            </div>
+            <br/>
+            <div class="d-flex justify-content-end">
+              <!-- 新添加的 div -->
+              <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="closeEditModal"
+              >
+                Close
+              </button>
+              <button
+                  type="submit"
+                  class="btn btn-primary ml-2"
+                  @click="saveEditedOrder"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -208,6 +364,7 @@ export default {
     return {
       orders: [],
       NewOrder: {
+        //和後端receiveOrdersDTO的屬性要一致
         orderId: "",
         userId: "",
         orderDate: "",
@@ -220,7 +377,16 @@ export default {
         recipientPhone: "",
         paymentTime: "",
       },
+      statuses: ["處理中", "已完結", "已取消"], // 可選擇的訂單狀態
+      searchTerm: "",
+      filteredOrders: [],
     };
+  },
+
+  watch: {
+    searchTerm(newValue) {
+      this.search();
+    },
   },
 
   methods: {
@@ -238,56 +404,109 @@ export default {
       return dateTime.toLocaleString("zh-TW", options);
     },
 
-    redirectToOrdersDetail(o) {
+    search() {
+      // 根據搜索條件過濾訂單列表
+      if (this.searchTerm.trim() === "") {
+        // 如果搜索條件為空，顯示所有訂單
+        this.filteredOrders = this.orders;
+        console.log("成功搜尋");
+      } else {
+        // 否則，過濾訂單列表
+        this.filteredOrders = this.orders.filter(
+            (order) => order.orderId.toString().includes(this.searchTerm) ||
+                order.orderStatus.includes(this.searchTerm) ||
+                order.deliverAddress.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                order.recipientName.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      }
+    },
+
+    redirectToOrdersDetail(order) {
       this.$router.push({
         path: "/orders/detail",
         query: {
-          x: o.orderId,
-          y: o.orderDate,
-          // z: product.price,
+          x: order.orderId,
+          y: order.orderDate,
         },
       });
     },
-
-    // reorderByOrderId(order) {
-    //   if (confirm("您確定要重新下單嗎？")) {
-    //     console.log("orderId:", order.orderId);
-    //     axios
-    //       .post(`${this.API_URL}/api/orders/reorder?orderId=${order.orderId}`)
-    //       .then((response) => {
-    //         console.log(response.data);
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error:", error);
-    //       });
-    //   } else {
-    //     console.log("取消"); //如果用戶取消重新下單動作，則不執行重新下單邏輯
-    //   }
-    // },
 
     saveOrder() {
       if (confirm("您確定要儲存這項資料嗎？")) {
         console.log("New Order:", this.NewOrder);
 
         axios
-          .post(`${this.API_URL}/api/orders/insertOrders`, this.NewOrder)
-          .then((response) => {
-            this.resetFormData(); //清空表單數據
-            console.log(response.data);
-            // this.fetchData();
-            this.closeInsertModal();
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+            .post(`${this.API_URL}/orders/insertOrders`, this.NewOrder)
+            .then((response) => {
+              this.resetFormData(); //清空表單數據
+              console.log(response.data);
+              // this.fetchData();
+              this.closeInsertModal();
+              this.$router.go();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
       } else {
         // 如果用戶取消保存操作，則不執行保存邏輯
         console.log("取消保存");
       }
     },
 
+    saveEditedOrder() {
+      if (confirm("您確定要儲存這次的編輯嗎？")) {
+        console.log("New Order:", this.NewOrder);
+        axios
+            .put(
+                `${this.API_URL}/orders/updateOrder/${this.NewOrder.orderId}`,
+                this.NewOrder
+            )
+            .then((response) => {
+              this.resetFormData(); //清空表單數據
+              console.log(response.data);
+              // this.fetchData();
+              this.closeEditModal();
+              this.$router.go();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+      } else {
+        // 如果用戶取消保存操作，則不執行保存邏輯
+        console.log("取消保存");
+      }
+    },
+
+    // updateOrderStatus(specifiedOrderId, newStatus) {
+    //   if (confirm("您確定要更改訂單狀態嗎？")) {
+    //     axios
+    //       .put(
+    //         `${this.API_URL}/orders/updateOrderStatusByOrderId/${specifiedOrderId}`,
+    //         newStatus
+    //       )
+    //       .then((response) => {
+    //         console.log(response.data);
+    //         // 如果成功，更新訂單列表中相應訂單的狀態
+    //         const updatedOrder = this.orders.find(
+    //           (order) => order.orderId === specifiedOrderId
+    //         );
+    //         if (updatedOrder) {
+    //           updatedOrder.orderStatus = newStatus;
+    //         }
+    //         this.$router.go();
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error in updating order status:", error);
+    //       });
+    //   } else {
+    //     // 如果用戶取消操作，則不執行更改訂單邏輯
+    //     console.log("取消更改");
+    //   }
+    // },
+
     resetFormData() {
       this.NewOrder = {
+        orderId: "",
         userId: "",
         orderDate: "",
         paymentMethod: "",
@@ -311,14 +530,52 @@ export default {
       this.$refs.insertModal.classList.remove("show");
       this.$refs.insertModal.style.display = "none";
       document.body.classList.remove("modal-open");
+      this.resetFormData();
+    },
+
+    openEditModal(order) {
+      this.$refs.editModal.classList.add("show");
+      this.$refs.editModal.style.display = "block";
+      document.body.classList.add("modal-open");
+      this.NewOrder = order;
+    },
+
+    closeEditModal() {
+      this.$refs.editModal.classList.remove("show");
+      this.$refs.editModal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      this.resetFormData();
     },
   },
 
   mounted() {
-    axios.get(`${this.API_URL}/api/orders/findAll`).then((rs) => {
-      console.log(rs.data);
-      this.orders = rs.data;
-    });
+    const loggedInMember = sessionStorage.getItem('loggedInMember');
+    const loggedInMemberObject = JSON.parse(loggedInMember);
+    console.log(loggedInMemberObject);
+    if (loggedInMemberObject === null) {
+      alert('請先登入');
+      this.$router.push('/login');
+    } else {
+      const role = loggedInMemberObject.authentication;
+      console.log(role);
+      if (role == '1' || role == '0') {
+        // alert('歡迎回來，管理者!!');
+      } else {
+        alert('權限不足');
+        this.$router.push('/');
+      }
+    }
+
+    axios
+        .get(`${this.API_URL}/orders/findAll`)
+        .then((rs) => {
+          console.log(rs.data);
+          this.orders = rs.data;
+          this.search();
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
   },
 };
 </script>
