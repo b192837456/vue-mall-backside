@@ -422,6 +422,7 @@ export default {
     },
 
     redirectToOrdersDetail(order) {
+      console.log(order.orderId)
       this.$router.push({
         path: "/orders/detail",
         query: {
@@ -574,7 +575,7 @@ export default {
           this.search();
         })
         .catch((error) => {
-          console.error("Error fetching products:", error);
+          console.error("Error fetching orders:", error);
         });
   },
 };
