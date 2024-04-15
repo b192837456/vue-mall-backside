@@ -219,19 +219,19 @@ export default {
           "iPhone 14 256G",
           "MacBook Air 13吋 M1 晶片 256GB",
           "iPad 10 64G WIFI",
-          "MacBook Pro 14 吋 512GB M3",
+          // "MacBook Pro 14 吋 512GB M3",
         ],
         datasets: [
           {
-            label: "銷售量",
-            data: [9, 2, 5, 2, 1, 1], // 這裡填入每個產品的銷售量
+            label: "銷售量 Top 5",
+            data: [25, 23, 12, 10, 9], // 這裡填入每個產品的銷售量
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
               "rgba(255, 206, 86, 0.2)",
               "rgba(75, 192, 192, 0.2)",
               "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
+              // "rgba(255, 159, 64, 0.2)",
             ],
             borderColor: [
               "rgba(255, 99, 132, 1)",
@@ -239,7 +239,7 @@ export default {
               "rgba(255, 206, 86, 1)",
               "rgba(75, 192, 192, 1)",
               "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)",
+              // "rgba(255, 159, 64, 1)",
             ],
             borderWidth: 1,
           },

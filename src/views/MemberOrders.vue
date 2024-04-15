@@ -189,6 +189,13 @@
               <!-- 新添加的 div -->
               <button
                   type="button"
+                  class="btn"
+                  @click="demoInsertModal"
+              >
+                DEMO
+              </button>
+              <button
+                  type="button"
                   class="btn btn-secondary"
                   @click="closeInsertModal"
               >
@@ -422,6 +429,8 @@ export default {
     },
 
     redirectToOrdersDetail(order) {
+      sessionStorage.setItem('x', order.orderId);
+      sessionStorage.setItem('y', order.orderDate);
       console.log(order.orderId)
       this.$router.push({
         path: "/orders/detail",
@@ -430,6 +439,19 @@ export default {
           y: order.orderDate,
         },
       });
+    },
+
+    demoInsertModal() {
+      this.NewOrder.userId = "27";
+      this.NewOrder.orderDate = "2024-04-16";
+      this.NewOrder.paymentMethod = "Paypal";
+      this.NewOrder.orderStatus = "處理中";
+      this.NewOrder.deliverDate = "2024-04-16";
+      this.NewOrder.pickupDate = "2024-04-16";
+      this.NewOrder.deliverAddress = "台南市東區北門路一段60號";
+      this.NewOrder.recipientName = "陳怡君";
+      this.NewOrder.recipientPhone = "0989012345";
+      this.NewOrder.paymentTime = "2024-04-16";
     },
 
     saveOrder() {

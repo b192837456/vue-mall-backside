@@ -106,6 +106,13 @@
               <!-- 新添加的 div -->
               <button
                   type="button"
+                  class="btn"
+                  @click="demoInsertModal"
+              >
+                DEMO
+              </button>
+              <button
+                  type="button"
                   class="btn btn-secondary"
                   @click="closeInsertModal"
               >
@@ -231,6 +238,12 @@ export default {
       return dateTime.toLocaleString("zh-TW", options);
     },
 
+    demoInsertModal() {
+      this.NewOrdersDetail.specId = "C131101";
+      this.NewOrdersDetail.quantity = "1";
+      this.NewOrdersDetail.price = "27900";
+    },
+
     saveOrdersDetail() {
       if (confirm("您確定要儲存這項資料嗎？")) {
         this.NewOrdersDetail.orderId = this.x
@@ -346,6 +359,9 @@ export default {
         this.$router.push('/');
       }
     }
+
+    this.x = sessionStorage.getItem("x")
+    this.y = sessionStorage.getItem("y")
 
     axios
         .get(`${this.API_URL}/orders/findAllOrdersDetailDTOs`)
