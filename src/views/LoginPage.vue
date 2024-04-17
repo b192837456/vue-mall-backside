@@ -36,7 +36,7 @@
             </div>
           </div>
           <button class="w-100 btn btn-lg btn-primary" @click.prevent="login">
-            SING IN
+            SIGN IN
           </button>
           <div class="text-danger text-center mt-3">{{ message }}</div>
 

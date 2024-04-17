@@ -12,5 +12,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    port: 3000  // 设置开发服务器的端口为4000
   }
 })
