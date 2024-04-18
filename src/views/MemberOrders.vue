@@ -1,9 +1,22 @@
 <template>
   <main class="container">
     <h2>訂單管理</h2>
-    <br/>
 
     <!-- 移到表格外部 -->
+    <button
+        type="button"
+        class="btn btn-outline-dark"
+        @click="exportToExcel"
+    >
+      Excel
+    </button>
+    <button
+        type="button"
+        class="btn btn-outline-dark"
+        @click="exportToPDF"
+    >
+      PDF
+    </button>
     <button
         type="button"
         class="btn btn-outline-dark"
@@ -11,6 +24,7 @@
     >
       新增
     </button>
+    <br/>
 
     <input
         type="text"
@@ -21,8 +35,8 @@
     <br/>
 
     <div class="table-frame">
-      <table class="table table-hover">
-        <thead class="table-title">
+      <table class="table table-hover" ref="ordersTable">
+        <thead>
         <tr class="text-center">
           <th scope="col">訂單編號</th>
           <th scope="col">訂購日期</th>
@@ -355,6 +369,10 @@
 
 <script>
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ArialUnicodeMS from "../assets/fonts/ArialUnicodeMS.ttf";
+import * as XLSX from "xlsx"; // 使用具名導入方式
 
 export default {
   data() {
@@ -387,6 +405,81 @@ export default {
   },
 
   methods: {
+
+    exportToPDF() {
+      const doc = new jsPDF();
+
+      // 添加字體
+      doc.addFont(ArialUnicodeMS, "ArialUnicodeMS"); // 為字體指定一個名稱
+
+      // 將表格轉換成可匯出的格式
+      const table = this.$refs.ordersTable;
+
+      // 將表格內容加入 PDF 中
+      doc.setFont("ArialUnicodeMS"); // 設置字體
+      doc.text("Orders", 10, 10); // 添加繁體中文文本
+      doc.autoTable({
+        html: table,
+        startY: 20, // 表格的起始Y座標
+        margin: { top: 20 }, // 表格的邊距
+        styles: {
+          font: "ArialUnicodeMS",
+          //這裏設置字體樣式
+          fontStyle: "normal",
+          overflow: 'linebreak', // 設置表格內容溢出時的處理方式
+        },
+      });
+
+      // 下載 PDF
+      doc.save("訂單列表.pdf");
+    },
+
+    exportToExcel() {
+      // 設定要匯出的資料
+      const data = this.filteredOrders.map((order) => ({
+        訂單編號: order.orderId,
+        訂購日期: this.formatDate(order.orderDate),
+        訂單狀態: order.orderStatus,
+        送貨地址: order.deliverAddress,
+        收件人姓名: order.recipientName,
+        收件人手機: order.recipientPhone,
+      }));
+
+      // 創建新的Workbook
+      const wb = XLSX.utils.book_new();
+      // 將資料轉換為Worksheet
+      const ws = XLSX.utils.json_to_sheet(data);
+      // 將Worksheet添加到Workbook中
+      XLSX.utils.book_append_sheet(wb, ws, "訂單列表");
+
+      // 將Workbook轉換為二進制數據
+      const wbBinary = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      // 創建Blob對象
+      const blob = new Blob([wbBinary], {type: "application/octet-stream"});
+
+      // 下載Excel檔
+      const fileName = "訂單列表.xlsx";
+      if (navigator.msSaveBlob) {
+        // For IE
+        navigator.msSaveBlob(blob, fileName);
+        console.log(blob);
+      } else {
+        // For other browsers
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log(blob);
+        console.log(link);
+      }
+    },
+
     formatDate(dateTimeString) {
       const options = {
         year: "numeric",
@@ -400,6 +493,7 @@ export default {
       const dateTime = new Date(dateTimeString);
       return dateTime.toLocaleString("zh-TW", options);
     },
+
 
     search() {
       // 根據搜索條件過濾訂單列表
@@ -593,7 +687,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* .container {
   max-width: 95%;
   overflow-x: auto;  啟用水平捲動
@@ -636,11 +730,9 @@ export default {
 }
 
 .btn-outline-dark {
-  position: absolute;
-  top: 90px;
-  right: 102px;
-  margin: 10px;
-  /* 调整按钮与表格的间距 */
+  float: right; /* 讓按鈕靠右浮動 */
+  margin-left: 10px; /* 調整按鈕間距 */
+  margin-bottom: 5px;
 }
 
 .modal-header {
@@ -704,7 +796,6 @@ export default {
   margin-right: 0px;
   /* 設定按鈕的右邊距 */
 }
-
 
 
 </style>

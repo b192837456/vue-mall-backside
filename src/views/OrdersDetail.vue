@@ -14,6 +14,14 @@
       新增
     </button>
 
+    <button
+        type="button"
+        class="btn btn-outline-dark"
+        @click="redirectToOrdersPrint(x)"
+    >
+      列印
+    </button>
+
     <table class="table table-striped table-hover">
       <thead>
       <tr class="text-center">
@@ -226,6 +234,17 @@ export default {
   },
 
   methods: {
+    redirectToOrdersPrint(x) {
+      sessionStorage.setItem('x', x);
+      console.log(x)
+      this.$router.push({
+        path: "/orders/print",
+        query: {
+          xOrderId: x,
+        },
+      });
+    },
+
     formatDate(dateTimeString) {
       const options = {
         year: "numeric",
@@ -383,7 +402,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* .container {
   max-width: 95%;
   overflow-x: auto;  啟用水平捲動
