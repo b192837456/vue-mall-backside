@@ -688,10 +688,6 @@ export default {
 </script>
 
 <style scoped>
-/* .container {
-  max-width: 95%;
-  overflow-x: auto;  啟用水平捲動
-} */
 
 .custom-link {
   background-color: transparent;
@@ -760,7 +756,6 @@ export default {
   position: sticky;
   top: 0;
   z-index: 2; /* 確保標題行在上方 */
-  //background-color: #F0F0F0; /* 可以選擇性地設置背景色 */
 }
 
 .table tbody td {
@@ -782,8 +777,9 @@ export default {
   color: #5B5B5B;
   font-size: 14px;
   font-weight: bold;
-  //cursor: pointer;
+  cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  margin-right: 0px; /* 設定按鈕的右邊距 */
 }
 
 /* 按鈕懸停時變化 */
@@ -791,11 +787,5 @@ export default {
   background-color: #5B5B5B;
   color: #E0E0E0;
 }
-
-.table button {
-  margin-right: 0px;
-  /* 設定按鈕的右邊距 */
-}
-
 
 </style>

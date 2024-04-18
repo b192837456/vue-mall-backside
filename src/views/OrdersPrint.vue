@@ -12,7 +12,7 @@
       PDF
     </button>
 
-    <table class="table1" ref="ordersTable">
+    <table class="table1" ref="ordersTable1">
       <thead>
       <tr>
         <th>出貨單</th>
@@ -45,7 +45,7 @@
 
     <br/>
 
-    <table class="table2">
+    <table class="table2" ref="ordersTable2">
       <thead>
       <tr class="text-center">
         <th scope="col">品名</th>
@@ -125,14 +125,25 @@ export default {
       // 添加字體
       doc.addFont(ArialUnicodeMS, "ArialUnicodeMS"); // 為字體指定一個名稱
 
-      // 將表格轉換成可匯出的格式
-      const table = this.$refs.ordersTable;
+      // 取得 table1 和 table2 的 HTML 元素
+      const table1 = this.$refs.ordersTable1;
+      const table2 = this.$refs.ordersTable2;
 
       // 將表格內容加入 PDF 中
       doc.setFont("ArialUnicodeMS"); // 設置字體
-      doc.text("訂單列表", 10, 10); // 添加繁體中文文本
+      doc.text("OrderDetails", 10, 10); // 添加繁體中文文本
       doc.autoTable({
-        html: table,
+        html: table1,
+        startY: 20, // 設置 table1 的起始位置
+        styles: {
+          font: "ArialUnicodeMS",
+          //這裏設置字體樣式
+          fontStyle: "normal",
+        },
+      });
+      doc.autoTable({
+        html: table2,
+        startY: doc.lastAutoTable.finalY + 10, // 設置 table2 的起始位置在前一個表格的底部
         styles: {
           font: "ArialUnicodeMS",
           //這裏設置字體樣式
@@ -233,7 +244,7 @@ export default {
 };
 </script>
 
-<style scoped>
+  <style scoped>
 
 .subtitle {
   color: grey;
