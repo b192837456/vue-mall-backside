@@ -84,7 +84,7 @@ export default {
           sessionStorage.setItem("loggedInMember", JSON.stringify(rs.data));
           this.$router.push("/");
           if (rs.data.authentication == "1"|| rs.data.authentication == "0") {
-            alert("歡迎回來，管理者");
+            alert("您現在使用的是後臺系統，歡迎回來!");
           }
 
 
@@ -103,4 +103,4 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped></style>

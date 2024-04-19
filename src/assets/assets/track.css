@@ -1,0 +1,90 @@
+/* custom.css */
+
+.custom-sidebar {
+    background-color: #333;
+    color: white;
+  }
+  
+  .custom-sidebar .list-group-item {
+    background-color: #333;
+    color: white;
+    border: none;
+  }
+  
+  .custom-sidebar .list-group-item:hover {
+    background-color: #555;
+  }
+  
+  .track-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .track-item {
+    position: relative;
+    width: 240px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+  }
+  
+  .track-image {
+    width: 100%;
+    height: 160px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .track-image .product-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .track-info {
+    padding: 8px 12px;
+  }
+  
+  .track-name {
+    font-size: 1rem;
+    color: #333;
+    margin: 8px 0;
+  }
+  
+  .track-price {
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .track-item {
+      width: 100%;
+    }
+  }
+  
+  .untrack-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #ffa500;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .untrack-button .fa {
+    color: white;
+  }

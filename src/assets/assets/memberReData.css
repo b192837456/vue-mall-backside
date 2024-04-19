@@ -1,0 +1,45 @@
+/* 表單項目的外層容器 */
+.lead {
+    margin-bottom: 1rem;
+  }
+  
+  /* 表單輸入框和標籤的排列方式 */
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* 表單輸入框的樣式 */
+  .input-wrapper input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  /* 提示標籤的樣式 */
+  .missing-data-label {
+    color: red;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  
+  /* 提交按鈕的樣式 */
+  button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }

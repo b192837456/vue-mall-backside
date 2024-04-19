@@ -1,7 +1,7 @@
 <template>
   <AppHeader></AppHeader>
  <RouterView></RouterView>
-  <AppFooter></AppFooter>
+<!--  <AppFooter></AppFooter>-->
 </template>
 <script>
 import AppHeader from "@/components/AppHeader.vue";

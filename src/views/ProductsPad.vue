@@ -1,10 +1,11 @@
 <template>
   <main class="container">
     <h1>Pad產品</h1>
-    <button type="button" class="btn btn-primary btn-add" @click="openModal">新增</button> <!-- 移到表格外部 -->
+    <button type="button" class="btn btn-outline-dark btn-add" @click="openModal">新增</button> <!-- 移到表格外部 -->
     <input type="text" v-model="searchTerm" class="form-control" placeholder="搜尋產品">
 
-    <table class="table table-striped table-hover">
+    <div class="table-frame">
+    <table class="table table-hover">
       <thead>
         <tr class="text-center">
           <th scope="col">產品編號</th>
@@ -69,7 +70,7 @@
         </tr>
       </tbody>
     </table>
-
+  </div>
 
 
   </main>
@@ -403,7 +404,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* .container {
+  max-width: 95%;
+  overflow-x: auto;  啟用水平捲動
+} */
+
 .custom-link {
   background-color: transparent;
   /* 背景透明 */
@@ -440,10 +446,10 @@ export default {
   /* 水平居中 */
 }
 
-.btn-add {
+.btn-outline-dark {
   position: absolute;
-  top: 90px;
-  right: 95PX;
+  top: 70px;
+  right: 65px;
   margin: 10px;
   /* 调整按钮与表格的间距 */
 }
@@ -462,12 +468,25 @@ export default {
   /* 调整关闭按钮与右侧的距离 */
 }
 
-.table thead th {
-  white-space: nowrap;
+.table-frame {
+  border: 3px solid #ADADAD;
+  border-radius: 10px;
+  padding: 10px 30px;
 }
 
-.table tbody th {
+.table thead th {
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  /* 確保標題行在上方 */
+  background-color: #ffffff;
+  /* 可以選擇性地設置背景色 */
+}
+
+.table tbody td {
+  white-space: normal;
+  vertical-align: middle;
 }
 
 /* 定義主顏色 */
@@ -477,11 +496,11 @@ export default {
 
 /* 定義按鈕樣式 */
 .table button {
-  border: 1px solid var(--primary-color);
+  border: 1px solid #5B5B5B;
   border-radius: 20px;
   padding: 6px 12px;
   background-color: transparent;
-  color: var(--primary-color);
+  color: #5B5B5B;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -490,8 +509,8 @@ export default {
 
 /* 按鈕懸停時變化 */
 .table button:hover {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #5B5B5B;
+  color: #E0E0E0;
 }
 
 .table button {
@@ -499,12 +518,20 @@ export default {
   /* 設定按鈕的右邊距 */
 }
 
-.table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  /* 確保標題行在上方 */
-  background-color: #fff;
-  /* 可以選擇性地設置背景色 */
+.actionButton {
+  color: black;
+  border-color: black;
+  transition: color 0.3s, border-color 0.3s;
+  /* 添加過渡效果 */
+}
+
+.actionButton:hover {
+  color: gray;
+  /* 滑鼠移上時改變顏色 */
+}
+
+.actionButton:active {
+  color: darkgray;
+  /* 按下按鈕時改變顏色 */
 }
 </style>

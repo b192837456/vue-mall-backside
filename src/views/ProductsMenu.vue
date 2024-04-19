@@ -1,19 +1,23 @@
 <template>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
     <div>
     <div class="text-center">
-    <a href="javascript: void(0)" class="btnP" @click="navigateTo('/products/phone')">
+    <a href="javascript: void(0)" class="btn btn-outline-dark btnA" @click="navigateTo('/products/phone')">
     Phone
     <span></span><span></span><span></span><span></span>
     </a>
     </div>
     <div class="text-center">
-    <a href="javascript: void(0)" class="btnP" @click="navigateTo('/products/mac')">
+    <a href="javascript: void(0)" class="btn btn-outline-dark btnA" @click="navigateTo('/products/mac')">
     Mac
     <span></span><span></span><span></span><span></span>
     </a>
     </div>
     <div class="text-center">
-    <a href="javascript: void(0)" class="btnP" @click="navigateTo('/products/pad')">
+    <a href="javascript: void(0)" class="btn btn-outline-dark btnA" @click="navigateTo('/products/pad')">
     Pad
     <span></span><span></span><span></span><span></span>
     </a>
@@ -51,7 +55,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
  .btnP {
     display: inline-block;
     position: relative;
@@ -68,6 +72,18 @@
     overflow: hidden;
     transition: 0.5s;
     padding: 10px 20px;
+}
+.btnA{
+  min-width: 200px;
+  min-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50px;
+  text-size-adjust: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 10px;
+  
 }
 .btnP span {
     position: absolute;

@@ -1,71 +1,78 @@
 <template>
   <main class="container">
     <h1>手機產品</h1>
-    <button type="button" class="btn btn-primary btn-add" @click="openModal">新增</button> <!-- 移到表格外部 -->
+    <button type="button" class="btn btn-outline-dark btn-add" @click="openModal" style="  position: absolute;
+  top: 75px;
+  right: 65px;
+  margin: 10px;
+  /* 调整按钮与表格的间距 */
+  border: 2px solid black;">新增</button> <!-- 移到表格外部 -->
     <input type="text" v-model="searchTerm" class="form-control" placeholder="搜尋產品">
 
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr class="text-center">
-          <th scope="col">產品編號</th>
-          <th scope="col">產品名稱 </th>
-          <th scope="col">價格(元)</th>
-          <th scope="col">容量</th>
-          <th scope="col">螢幕尺寸</th>
-          <th scope="col">更新時間</th>
-          <!-- <th scope="col">修改日期</th> -->
-          <th scope="col">樣式</th>
-          <th scope="col">修改</th>
-          <th scope="col">下(上)架</th>
-          <th scope="col">刪除</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in filteredProducts" :key="index" class="text-center" valign="middle">
-          <td>{{ product.productId }}</td>
-          <td>{{ product.productName }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.capacity }}</td>
-          <td>{{ product.size }}</td>
-          <td>{{ formatDate(product.modifyDate) }}</td>
-          <!-- <td>{{ formatDate(product.modifyDate) }}</td> -->
-          <td>
-            <button @click="redirectToSpec(product)">
-              <i class="fas fa-list"></i>
-            </button>
-            <!-- <span>樣式</span> -->
-          </td>
+    <div class="table-frame">
+      <table class="table table-hover">
+        <thead >
+          <tr class="text-center">
+            <th scope="col">產品編號</th>
+            <th scope="col">產品名稱 </th>
+            <th scope="col">價格(元)</th>
+            <th scope="col">容量</th>
+            <th scope="col">螢幕尺寸</th>
+            <th scope="col">更新時間</th>
+            <!-- <th scope="col">修改日期</th> -->
+            <th scope="col">樣式</th>
+            <th scope="col">修改</th>
+            <th scope="col">下(上)架</th>
+            <th scope="col">刪除</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(product, index) in filteredProducts" :key="index" class="text-center" valign="middle">
+            <td>{{ product.productId }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.capacity }}</td>
+            <td>{{ product.size }}</td>
+            <td>{{ formatDate(product.modifyDate) }}</td>
+            <!-- <td>{{ formatDate(product.modifyDate) }}</td> -->
+            <td>
+              <button @click="redirectToSpec(product)">
+                <i class="fas fa-list"></i>
+              </button>
+              <!-- <span>樣式</span> -->
+            </td>
 
-          <td>
-            <button @click="openChangeModal(product)">
-              <i class="fas fa-pen"></i>
-            </button>
-            <!-- <span>修改</span> -->
-          </td>
+            <td>
+              <button @click="openChangeModal(product)" class="actionButton">
+                <i class="fas fa-pen"></i>
+              </button>
 
-          <td>
-            <button v-if="product.salesStatus === 0" @click="changeSalesStatus(product.productId)">
-              <i class="fas fa-check"></i>
-            </button>
-            <button v-else @click="changeSalesStatus(product.productId)">
-              <i class="fas fa-xmark"></i>
-            </button>
-            <!-- <span v-if="product.salesStatus === 0">上架</span> -->
-            <!-- <span v-else>下架</span> -->
-          </td>
+            </td>
 
-          <td>
-            <button @click="deletedProduct(product)">
-              <i class="fas fa-trash"></i>
-            </button>
-            <!-- <span>刪除</span> -->
-          </td>
+            <td>
+              <button v-if="product.salesStatus === 0" @click="changeSalesStatus(product.productId)"
+                class="actionButton">
+                <i class="fa-solid fa-rotate-right"></i>
+              </button>
+              <button v-else @click="changeSalesStatus(product.productId)" class="actionButton">
+                <i class="fas fa-xmark"></i>
+              </button>
+
+            </td>
+
+            <td>
+              <button @click="deletedProduct(product)" class="actionButton ">
+                <i class="fas fa-trash"></i>
+              </button>
+
+            </td>
 
 
-          <!-- <td><i class="fas fa-trash"></i></td> -->
-        </tr>
-      </tbody>
-    </table>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
 
 
@@ -92,7 +99,7 @@
             </div>
             <div class="form-group">
               <label for="productDescription">產品特性:</label>
-              <input type="textarea" class="form-control h-200" id="productDescription"
+              <input type="text" class="form-control h-200" id="productDescription"
                 v-model="NewProduct.productDescription">
             </div>
             <div class="form-group">
@@ -109,7 +116,7 @@
             </div>
             <div class="d-flex justify-content-end"> <!-- 新添加的 div -->
               <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-              <button type="submit" class="btn btn-primary ml-2" @click="saveProduct">Save</button>
+              <button type="submit" class="btn btn-outline-dark ml-2" @click="saveProduct">Save</button>
             </div>
           </form>
         </div>
@@ -157,7 +164,7 @@
             </div>
             <div class="d-flex justify-content-end">
               <button type="button" class="btn btn-secondary" @click="closeChangeModal">Close</button>
-              <button type="submit" class="btn btn-primary ml-2" @click="saveProduct">Save</button>
+              <button type="submit" class="btn btn-outline-dark ml-2" @click="saveProduct">Save</button>
             </div>
           </form>
         </div>
@@ -208,6 +215,7 @@ export default {
   watch: {
     searchTerm(newValue) {
       this.search();
+      console.log(newValue);
     },
   },
   methods: {
@@ -215,7 +223,7 @@ export default {
       console.log();
       if (confirm("您確定要刪除這筆產品嗎？")) {
         axios.delete(`${this.API_URL}/products/deleteProduct?productId=${product.productId}`)
-          .then(response => {
+          .then(() => {
             this.products = this.products.filter(p => p !== product);
             console.log('刪除成功');
             this.$router.go();
@@ -228,6 +236,7 @@ export default {
     },
 
     redirectToSpec(product) {
+      sessionStorage.setItem('productId', product.productId);
       sessionStorage.setItem('x', product.productId);
       sessionStorage.setItem('y', product.productName);
       sessionStorage.setItem('z', product.price);
@@ -249,17 +258,22 @@ export default {
         console.log('成功搜尋');
       } else {
         // 否則，過濾產品列表
-        this.filteredProducts = this.products.filter(product =>
-          product.productName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          product.price.toString().includes(this.searchTerm) ||
-          product.size.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          product.productId.toString().includes(this.searchTerm)
+        this.filteredProducts = this.products.filter(product => {
+          const productName = product.productName?.toLowerCase() || '';
+          const size = product.size?.toLowerCase() || '';
+          const productId = product.productId?.toString() || '';
+          const searchTerm = this.searchTerm.toLowerCase();
 
+          return productName.includes(searchTerm) ||
+            product.price.toString().includes(searchTerm) ||
+            size.includes(searchTerm) ||
+            productId.includes(searchTerm);
+        });
 
-        );
-
+        console.log(this.filteredProducts);
       }
     },
+
     saveProduct() {
       // 保存产品前先显示二次确认提示
       if (confirm("您確定要新增這筆產品嗎？")) {
@@ -269,8 +283,14 @@ export default {
           .then(response => {
             this.resetFormData(); // 清空表单数据
             console.log(response.data);
-            this.fetchData();
-            this.closeModal();
+            this.showLoadingAnimation
+
+            setTimeout(() => {
+              this.hideLoadingAnimation();
+              this.closeModal();
+              this.fetchData();
+            }, 1000);
+
           })
           .catch(error => {
             console.error('Error:', error);
@@ -360,7 +380,41 @@ export default {
       };
       const dateTime = new Date(dateTimeString);
       return dateTime.toLocaleString('zh-TW', options);
-    }
+    },
+    showLoadingAnimation() {
+      // 創建一個新的<div>元素來顯示等待動畫
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loadingDiv';
+      loadingDiv.style.position = 'fixed';
+      loadingDiv.style.top = '50%';
+      loadingDiv.style.left = '50%';
+      loadingDiv.style.transform = 'translate(-50%, -50%)';
+      loadingDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+      loadingDiv.style.padding = '20px';
+      loadingDiv.style.borderRadius = '10px';
+
+      // 添加旋轉圖示
+      const spinner = document.createElement('div');
+      spinner.className = 'spinner-border text-primary';
+      spinner.style.width = '3rem';
+      spinner.style.height = '3rem';
+      spinner.style.display = 'block';
+      spinner.style.margin = 'auto';
+
+      // 將旋轉圖示添加到loadingDiv中
+      loadingDiv.appendChild(spinner);
+
+      // 將loadingDiv添加到body中
+      document.body.appendChild(loadingDiv);
+    },
+
+    hideLoadingAnimation() {
+      // 從DOM中移除loadingDiv元素
+      const loadingDiv = document.getElementById('loadingDiv');
+      if (loadingDiv) {
+        loadingDiv.parentNode.removeChild(loadingDiv);
+      }
+    },
   },
   created() {
     const loggedInMember = sessionStorage.getItem('loggedInMember');
@@ -374,9 +428,9 @@ export default {
       console.log(role);
       console.log(role);
       if (role == '1' || role == '0') {
-         // alert('歡迎回來，管理者!!');
+        // alert('歡迎回來，管理者!!');
       } else {
-       alert('權限不足');
+        alert('權限不足');
         this.$router.push('/');
       }
     }
@@ -393,7 +447,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* .container {
+  max-width: 95%;
+  overflow-x: auto;  啟用水平捲動
+} */
+
 .custom-link {
   background-color: transparent;
   /* 背景透明 */
@@ -430,12 +489,8 @@ export default {
   /* 水平居中 */
 }
 
-.btn-add {
-  position: absolute;
-  top: 70px;
-  right: 75PX;
-  margin: 10px;
-  /* 调整按钮与表格的间距 */
+.btn-outline-dark {
+
 }
 
 .modal-header {
@@ -452,12 +507,25 @@ export default {
   /* 调整关闭按钮与右侧的距离 */
 }
 
-.table thead th {
-  white-space: nowrap;
+.table-frame {
+  border: 3px solid #ADADAD;
+  border-radius: 10px;
+  padding: 10px 30px;
 }
 
-.table tbody th {
+.table thead th {
   white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  /* 確保標題行在上方 */
+  background-color: #ffffff;
+  /* 可以選擇性地設置背景色 */
+}
+
+.table tbody td {
+  white-space: nowrap;
+  vertical-align: bottom;
 }
 
 /* 定義主顏色 */
@@ -467,11 +535,11 @@ export default {
 
 /* 定義按鈕樣式 */
 .table button {
-  border: 1px solid var(--primary-color);
+  border: 1px solid #5B5B5B;
   border-radius: 20px;
   padding: 6px 12px;
   background-color: transparent;
-  color: var(--primary-color);
+  color: #5B5B5B;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -480,8 +548,8 @@ export default {
 
 /* 按鈕懸停時變化 */
 .table button:hover {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #5B5B5B;
+  color: #E0E0E0;
 }
 
 .table button {
@@ -489,12 +557,20 @@ export default {
   /* 設定按鈕的右邊距 */
 }
 
-.table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  /* 確保標題行在上方 */
-  background-color: #fff;
-  /* 可以選擇性地設置背景色 */
+.actionButton {
+  color: black;
+  border-color: black;
+  transition: color 0.3s, border-color 0.3s;
+  /* 添加過渡效果 */
+}
+
+.actionButton:hover {
+  color: gray;
+  /* 滑鼠移上時改變顏色 */
+}
+
+.actionButton:active {
+  color: darkgray;
+  /* 按下按鈕時改變顏色 */
 }
 </style>

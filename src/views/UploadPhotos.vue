@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     /* Your styles here */
     .success-message {
         background-color: #d4edda;

@@ -1,0 +1,41 @@
+/* 自定义按钮样式 */
+.btn-custom {
+    background-color: #ffffff; /* 设置按钮背景颜色为白色 */
+    border: 1px solid #ced4da; /* 设置按钮边框为黑色 */
+    color: #000000; /* 设置按钮文字颜色为黑色 */
+    border-radius: .25rem; /* 设置边框圆角 */
+
+}
+
+/* 自定义 orderby 样式 */
+.control1  {
+    border: 1px solid #ced4da !important; /* 设置边框颜色 */
+    border-radius: .5rem !important; /* 设置边框圆角 */
+    padding: .375rem .75rem !important; /* 设置内边距 */
+    width: 200px !important; /* 设置宽度 */
+}
+.custom-pagination .page-link {
+    color: #6c757d; /* 设置页码按钮文本颜色为灰色调 */
+    background-color: #f8f9fa; /* 设置页码按钮背景颜色为浅灰色调 */
+    border-color: #dee2e6; /* 设置页码按钮边框颜色 */
+}
+
+.custom-pagination .page-link:hover {
+    color: #495057; /* 设置鼠标悬停时的文本颜色 */
+    background-color: #e9ecef; /* 设置鼠标悬停时的背景颜色 */
+    border-color: #dee2e6; /* 设置鼠标悬停时的边框颜色 */
+}
+
+.custom-pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff; /* 设置当前页码按钮文本颜色为白色 */
+    background-color: #343a40; /* 设置当前页码按钮背景颜色为深灰色 */
+    border-color: #343a40; /* 设置当前页码按钮边框颜色 */
+}
+.select1  {
+    border-radius: .5rem !important; /* 设置边框圆角 */
+    border: 1px solid #ced4da !important; /* 设置边框颜色 */
+    padding: .375rem .75rem !important; /* 设置内边距 */
+    width: 200px !important; /* 设置宽度 */
+}
+

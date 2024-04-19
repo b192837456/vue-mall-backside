@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* 模態框樣式 */
 .modal {
   display: none; /* 預設隱藏 */

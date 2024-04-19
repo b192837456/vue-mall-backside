@@ -14,6 +14,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000  // 设置开发服务器的端口为4000
-  }
-})
+  port: 3000,
+    },
+}
+)

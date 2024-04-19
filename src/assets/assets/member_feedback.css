@@ -1,0 +1,17 @@
+
+.custom-sidebar {
+  background-color: #333; /* 調整為與頂部導航欄相同的背景顏色 */
+  color: white; /* 文字顏色為白色 */
+}
+
+.custom-sidebar .list-group-item {
+  background-color: #333; /* 調整背景顏色 */
+  color: white; /* 文字顏色 */
+  border: none; /* 移除邊框 */
+}
+
+.custom-sidebar .list-group-item:hover {
+  background-color: #555; /* 滑鼠懸停時的背景顏色 */
+}
+
+/* 可以根據需要進一步調整樣式 */

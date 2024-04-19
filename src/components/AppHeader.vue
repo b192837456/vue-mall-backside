@@ -2,15 +2,15 @@
   <!-- navbar-->
   <header class="header bg-white">
     <div class="container px-lg-3">
-      <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="index.html"><span class="fw-bold text-uppercase text-dark">Apple Tree</span></a>
+      <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="/"><span class="fw-bold text-uppercase text-dark">Apple Tree</span></a>
         <button class="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/" class="nav-link active">Home</router-link>
-            </li>
+            </li> -->
             <li class="nav-item">
-              <router-link to="/product" class="nav-link active">Shop</router-link>
+              <!-- <router-link to="/product" class="nav-link active">Shop</router-link> -->
             </li>
             <li>
               <router-link to="/members" class="nav-link active">Members</router-link>
@@ -20,6 +20,12 @@
             </li>
             <li>
               <router-link to="/orders" class="nav-link active">Orders</router-link>
+            </li>
+            <li>
+            <router-link to="/statistics" class="nav-link active">Statistics</router-link>
+            </li>
+            <li>
+            <router-link to="/feedback" class="nav-link active">Feedback</router-link>
             </li>
 
           </ul>
@@ -79,4 +85,4 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped></style>
