@@ -526,16 +526,16 @@ export default {
     },
 
     demoInsertModal() {
-      this.NewOrder.userId = "27";
-      this.NewOrder.orderDate = "2024-04-16";
+      this.NewOrder.userId = "3";
+      this.NewOrder.orderDate = "2024-04-19";
       this.NewOrder.paymentMethod = "Paypal";
       this.NewOrder.orderStatus = "處理中";
-      this.NewOrder.deliverDate = "2024-04-16";
-      this.NewOrder.pickupDate = "2024-04-16";
-      this.NewOrder.deliverAddress = "台南市東區北門路一段60號";
-      this.NewOrder.recipientName = "陳怡君";
-      this.NewOrder.recipientPhone = "0989012345";
-      this.NewOrder.paymentTime = "2024-04-16";
+      this.NewOrder.deliverDate = "2024-04-19";
+      this.NewOrder.pickupDate = "2024-04-19";
+      this.NewOrder.deliverAddress = "台南市永康區南台街1號";
+      this.NewOrder.recipientName = "林小明";
+      this.NewOrder.recipientPhone = "0911222333";
+      this.NewOrder.paymentTime = "2024-04-19";
     },
 
     saveOrder() {
@@ -688,7 +688,6 @@ export default {
 </script>
 
 <style scoped>
-
 .custom-link {
   background-color: transparent;
   /* 背景透明 */
@@ -729,11 +728,6 @@ export default {
   float: right; /* 讓按鈕靠右浮動 */
   margin-left: 10px; /* 調整按鈕間距 */
   margin-bottom: 5px;
-}
-
-.modal-header {
-  position: relative;
-  /* 使得 .modal-header 成为定位上下文 */
 }
 
 .close {
@@ -786,6 +780,51 @@ export default {
 .table button:hover {
   background-color: #5B5B5B;
   color: #E0E0E0;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  backdrop-filter: blur(0.2px); /* 背景模糊效果 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+}
+
+.modal-header {
+  background-color: #E0E0E0; /* 淺灰色背景 */
+  position: relative; /* 使得 .modal-header 成为定位上下文 */
+}
+
+.modal-title {
+  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
+}
+
+.modal-body {
+  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
+}
+
+.modal-footer {
+  background-color: #E0E0E0; /* 淺灰色背景 */
+}
+
+.modal button {
+  background-color: #FFFFFF; /* 使用主顏色 */
+  color: #000000; /* 文字顏色 */
+  border: 1.5px solid #000000; /* 邊框 */
+  border-radius: 5px; /* 圓角 */
+  padding: 6px 10px; /* 調整內邊距 */
+  cursor: pointer; /* 滑鼠指標 */
+  transition: background-color 0.3s, color 0.3s; /* 添加過渡效果 */
+  margin-left: 5px; /* 調整按鈕間距 */
+}
+
+.modal button:hover {
+  background-color: #000000; /* 按鈕懸停時的背景顏色 */
+  color: #FFFFFF;
+}
+
+.form-control {
+  border-width: 1.5px; /* 設置邊框寬度為 2px */
+  border-style: solid; /* 使用實線邊框 */
+  border-color: #ADADAD; /* 設置邊框顏色 */
 }
 
 </style>
