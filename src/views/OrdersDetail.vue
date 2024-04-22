@@ -9,7 +9,7 @@
     </h7>
     <br/>
 
-    <!-- 移到表格外部 -->
+<!--     移到表格外部-->
 <!--    <button-->
 <!--        type="button"-->
 <!--        class="btn btn-outline-dark"-->
@@ -17,6 +17,21 @@
 <!--    >-->
 <!--      列印-->
 <!--    </button>-->
+    <button
+        type="button"
+        class="btn btn-outline-dark"
+        @click="exportToExcel"
+    >
+      Excel
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-outline-dark"
+        @click="exportToPDF"
+    >
+      PDF
+    </button>
 
     <button type="button" class="btn btn-outline-dark" @click="openInsertModal">
       新增
@@ -24,7 +39,7 @@
     <br/><br/>
 
     <div class="table-frame">
-      <table class="table table-hover">
+      <table class="table table-hover" ref="ordersDetailTable">
         <thead>
         <tr class="text-center">
           <th scope="col">訂單編號</th>
@@ -219,6 +234,10 @@
 
 <script>
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ArialUnicodeMS from "../assets/fonts/ArialUnicodeMS.ttf";
+import * as XLSX from "xlsx"; // 使用具名導入方式
 
 export default {
   data() {
@@ -237,16 +256,90 @@ export default {
   },
 
   methods: {
-    redirectToOrdersPrint(x) {
-      sessionStorage.setItem('x', x);
-      console.log(x)
-      this.$router.push({
-        path: "/orders/print",
-        query: {
-          xOrderId: x,
+
+    exportToPDF() {
+      const doc = new jsPDF();
+
+      // 添加字體
+      doc.addFont(ArialUnicodeMS, "ArialUnicodeMS"); // 為字體指定一個名稱
+
+      // 將表格轉換成可匯出的格式
+      const table = this.$refs.ordersDetailTable;
+
+      // 將表格內容加入 PDF 中
+      doc.setFont("ArialUnicodeMS"); // 設置字體
+      doc.text("OrdersDetail", 10, 10); // 添加繁體中文文本
+      doc.autoTable({
+        html: table,
+        startY: 20, // 表格的起始Y座標
+        margin: { top: 20 }, // 表格的邊距
+        styles: {
+          font: "ArialUnicodeMS",
+          //這裏設置字體樣式
+          fontStyle: "normal",
+          overflow: 'linebreak', // 設置表格內容溢出時的處理方式
         },
       });
+
+      // 下載 PDF
+      doc.save("訂單明細.pdf");
     },
+
+    exportToExcel() {
+      // 設定要匯出的資料
+      const data = this.filteredOrdersDetailDTOs.map((odDTO) => ({
+        訂單編號: odDTO.orderId,
+        產品名稱: odDTO.productName,
+        顏色: odDTO.color,
+        訂購數量: odDTO.quantity,
+        價格: odDTO.price,
+      }));
+
+      // 創建新的Workbook
+      const wb = XLSX.utils.book_new();
+      // 將資料轉換為Worksheet
+      const ws = XLSX.utils.json_to_sheet(data);
+      // 將Worksheet添加到Workbook中
+      XLSX.utils.book_append_sheet(wb, ws, "訂單明細");
+
+      // 將Workbook轉換為二進制數據
+      const wbBinary = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      // 創建Blob對象
+      const blob = new Blob([wbBinary], {type: "application/octet-stream"});
+
+      // 下載Excel檔
+      const fileName = "訂單明細.xlsx";
+      if (navigator.msSaveBlob) {
+        // For IE
+        navigator.msSaveBlob(blob, fileName);
+        console.log(blob);
+      } else {
+        // For other browsers
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log(blob);
+        console.log(link);
+      }
+    },
+
+    // redirectToOrdersPrint(x) {
+    //   sessionStorage.setItem('x', x);
+    //   console.log(x)
+    //   this.$router.push({
+    //     path: "/orders/print",
+    //     query: {
+    //       xOrderId: x,
+    //     },
+    //   });
+    // },
 
     formatDate(dateTimeString) {
       const options = {
