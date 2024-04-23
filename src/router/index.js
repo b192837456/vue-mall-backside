@@ -80,10 +80,10 @@ const router = new createRouter({
       path:"/feedback",
       component: () => import("@/views/Feedback.vue"),
     },
-
-    
-
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  }
 });
 
 export default router;

@@ -1,8 +1,6 @@
 <template>
   <main class="container">
     <h2>訂單管理</h2>
-
-    <!-- 移到表格外部 -->
     <button
         type="button"
         class="btn btn-outline-dark"
@@ -190,7 +188,6 @@
             </div>
             <br/>
             <div class="d-flex justify-content-end">
-              <!-- 新添加的 div -->
               <button
                   type="button"
                   class="btn"
@@ -237,15 +234,6 @@
         </div>
         <div class="modal-body">
           <form>
-            <!-- <div class="form-group">
-              <label for="userId">會員編號</label>
-              <input
-                type="text"
-                class="form-control"
-                id="userId"
-                v-model="NewOrder.userId"
-              />
-            </div> -->
             <div class="form-group">
               <label for="orderDate">訂購日期</label>
               <input
@@ -274,12 +262,6 @@
                   {{ status }}
                 </option>
               </select>
-              <!-- <input
-                type="text"
-                class="form-control"
-                id="orderStatus"
-                v-model="NewOrder.orderStatus"
-              /> -->
             </div>
             <br/>
             <div class="form-group">
@@ -343,7 +325,6 @@
             </div>
             <br/>
             <div class="d-flex justify-content-end">
-              <!-- 新添加的 div -->
               <button
                   type="button"
                   class="btn btn-secondary"
@@ -372,7 +353,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ArialUnicodeMS from "../assets/fonts/ArialUnicodeMS.ttf";
-import * as XLSX from "xlsx"; // 使用具名導入方式
+import * as XLSX from "xlsx";
 
 export default {
   data() {
@@ -572,33 +553,6 @@ export default {
           });
     },
 
-    // updateOrderStatus(specifiedOrderId, newStatus) {
-    //   if (confirm("您確定要更改訂單狀態嗎？")) {
-    //     axios
-    //       .put(
-    //         `${this.API_URL}/orders/updateOrderStatusByOrderId/${specifiedOrderId}`,
-    //         newStatus
-    //       )
-    //       .then((response) => {
-    //         console.log(response.data);
-    //         // 如果成功，更新訂單列表中相應訂單的狀態
-    //         const updatedOrder = this.orders.find(
-    //           (order) => order.orderId === specifiedOrderId
-    //         );
-    //         if (updatedOrder) {
-    //           updatedOrder.orderStatus = newStatus;
-    //         }
-    //         this.$router.go();
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error in updating order status:", error);
-    //       });
-    //   } else {
-    //     // 如果用戶取消操作，則不執行更改訂單邏輯
-    //     console.log("取消更改");
-    //   }
-    // },
-
     resetFormData() {
       this.NewOrder = {
         orderId: "",
@@ -654,7 +608,6 @@ export default {
       const role = loggedInMemberObject.authentication;
       console.log(role);
       if (role == '1' || role == '0') {
-        // alert('歡迎回來，管理者!!');
       } else {
         alert('權限不足');
         this.$router.push('/');
@@ -678,53 +631,35 @@ export default {
 <style scoped>
 .custom-link {
   background-color: transparent;
-  /* 背景透明 */
   color: black;
-  /* 文字颜色 */
-  /* padding: 7px; */
-  /* 设置内边距 */
   display: inline-block;
-  /* 让链接变成行内块元素，以便控制宽度和高度 */
   position: relative;
-  /* 使得子元素的绝对定位相对于父元素 */
   text-decoration: none;
-  /* 移除下划线 */
   transition: color 0.3s;
-  /* 添加文字颜色的过渡效果 */
-  /* top: 10px; */
 }
 
 .custom-link:hover {
   color: gray;
-  /* 鼠标移上去时文字颜色变为灰色 */
 }
 
 .custom-link b-icon {
   display: block;
-  /* 将图标变为块级元素 */
   position: absolute;
-  /* 绝对定位，以便于控制位置 */
   top: -10px;
-  /* 将图标上移 */
   left: 50%;
-  /* 水平居中 */
   transform: translateX(-50%);
-  /* 水平居中 */
 }
 
 .btn-outline-dark {
-  float: right; /* 讓按鈕靠右浮動 */
-  margin-left: 10px; /* 調整按鈕間距 */
+  float: right;
+  margin-left: 10px;
   margin-bottom: 5px;
 }
 
 .close {
   position: absolute;
-  /* 相对于 .modal-header 定位 */
   top: 10px;
-  /* 调整关闭按钮与顶部的距离 */
   right: 10px;
-  /* 调整关闭按钮与右侧的距离 */
 }
 
 .table-frame {
@@ -737,7 +672,7 @@ export default {
   white-space: nowrap;
   position: sticky;
   top: 0;
-  z-index: 2; /* 確保標題行在上方 */
+  z-index: 2;
 }
 
 .table tbody td {
@@ -745,12 +680,12 @@ export default {
   vertical-align: bottom;
 }
 
-/* 定義主顏色 */
+
 :root {
   --primary-color: #007bff;
 }
 
-/* 定義按鈕樣式 */
+
 .table button {
   border: 1px solid #5B5B5B;
   border-radius: 20px;
@@ -761,58 +696,58 @@ export default {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  margin-right: 0px; /* 設定按鈕的右邊距 */
+  margin-right: 0px;
 }
 
-/* 按鈕懸停時變化 */
+
 .table button:hover {
   background-color: #5B5B5B;
   color: #E0E0E0;
 }
 
 .modal {
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
-  backdrop-filter: blur(0.2px); /* 背景模糊效果 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(0.2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modal-header {
-  background-color: #E0E0E0; /* 淺灰色背景 */
-  position: relative; /* 使得 .modal-header 成为定位上下文 */
+  background-color: #E0E0E0;
+  position: relative;
 }
 
 .modal-title {
-  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
+  font-weight: bold;
 }
 
 .modal-body {
-  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
+  font-weight: bold;
 }
 
 .modal-footer {
-  background-color: #E0E0E0; /* 淺灰色背景 */
+  background-color: #E0E0E0;
 }
 
 .modal button {
-  background-color: #FFFFFF; /* 使用主顏色 */
-  color: #000000; /* 文字顏色 */
-  border: 1.5px solid #000000; /* 邊框 */
-  border-radius: 5px; /* 圓角 */
-  padding: 6px 10px; /* 調整內邊距 */
-  cursor: pointer; /* 滑鼠指標 */
-  transition: background-color 0.3s, color 0.3s; /* 添加過渡效果 */
-  margin-left: 5px; /* 調整按鈕間距 */
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 5px;
 }
 
 .modal button:hover {
-  background-color: #000000; /* 按鈕懸停時的背景顏色 */
+  background-color: #000000;
   color: #FFFFFF;
 }
 
 .form-control {
-  border-width: 1.5px; /* 設置邊框寬度為 2px */
-  border-style: solid; /* 使用實線邊框 */
-  border-color: #ADADAD; /* 設置邊框顏色 */
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #ADADAD;
 }
 
 </style>

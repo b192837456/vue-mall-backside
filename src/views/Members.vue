@@ -133,8 +133,6 @@ export default {
       searchTerm: '', // 定義搜索條件的數據屬性
       filteredmembers: [] ,// 定義過濾後的成員數組的數據屬性
       banyesorno: false,
-
-
     };
   },
   watch: {
@@ -166,14 +164,11 @@ export default {
           const email = member.email?.toLowerCase() || '';
           const phone = member.phone?.toString() || '';
           const searchTerm = this.searchTerm.toLowerCase();
-          
-
           return userName.includes(searchTerm) ||
             email.toString().includes(searchTerm) ||
             phone.includes(searchTerm)
             ;
         });
-
         console.log(this.filteredmembers);
       }
     },
@@ -217,7 +212,7 @@ export default {
     },
     getmemebers() {
       axios.get(`${this.API_URL}/user/getAllUsers`).then((rs) => {
-        this.members = rs.data; // 将获取的数据存储在数组中    
+        this.members = rs.data;
         this.filteredmembers = this.members
       })
     },
@@ -234,18 +229,6 @@ export default {
       this.$refs.modal.style.display = 'none';
       document.body.classList.remove('modal-open');
     },
-    cancel() {
-      // 取消按鈕點擊事件處理
-      // 可以在這裡關閉modal等操作
-    },
-    edit() {
-      // 修改按鈕點擊事件處理
-      // 可以在這裡將頁面欄位轉為可變更狀態等操作
-    },
-  },
-  computed: {
-
-
   },
   created() {
     const loggedInMember = sessionStorage.getItem('loggedInMember');
@@ -259,7 +242,6 @@ export default {
       console.log(role);
       console.log(role);
       if (role == '1' || role == '0') {
-        // alert('歡迎回來，管理者!!');
       } else {
         alert('權限不足');
         this.$router.push('/');
@@ -267,53 +249,30 @@ export default {
     }
     this.getmemebers();
     this.filteredmembers = this.members;
-    // this.banyesorno = false;
-
-
   }
 }
 
 </script>
 <style scoped>
-/* .container {
-  max-width: 95%;
-  overflow-x: auto;  啟用水平捲動
-} */
-
 .custom-link {
   background-color: transparent;
-  /* 背景透明 */
   color: black;
-  /* 文字颜色 */
-  /* padding: 7px; */
-  /* 设置内边距 */
   display: inline-block;
-  /* 让链接变成行内块元素，以便控制宽度和高度 */
   position: relative;
-  /* 使得子元素的绝对定位相对于父元素 */
   text-decoration: none;
-  /* 移除下划线 */
   transition: color 0.3s;
-  /* 添加文字颜色的过渡效果 */
-  /* top: 10px; */
 }
 
 .custom-link:hover {
   color: gray;
-  /* 鼠标移上去时文字颜色变为灰色 */
 }
 
 .custom-link b-icon {
   display: block;
-  /* 将图标变为块级元素 */
   position: absolute;
-  /* 绝对定位，以便于控制位置 */
   top: -10px;
-  /* 将图标上移 */
   left: 50%;
-  /* 水平居中 */
   transform: translateX(-50%);
-  /* 水平居中 */
 }
 
 .btn-outline-dark {
@@ -321,7 +280,6 @@ export default {
   top: 70px;
   right: 65px;
   margin: 10px;
-  /* 调整按钮与表格的间距 */
   border: 2px solid black;
 }
 .btn-warning {
@@ -329,22 +287,16 @@ export default {
   top: 70px;
   right: 65px;
   margin: 10px;
-  /* 调整按钮与表格的间距 */
-  /* border: 2px solid black; */
 }
 
 .modal-header {
   position: relative;
-  /* 使得 .modal-header 成为定位上下文 */
 }
 
 .close {
   position: absolute;
-  /* 相对于 .modal-header 定位 */
   top: 10px;
-  /* 调整关闭按钮与顶部的距离 */
   right: 10px;
-  /* 调整关闭按钮与右侧的距离 */
 }
 
 .table-frame {
@@ -358,9 +310,7 @@ export default {
   position: sticky;
   top: 0;
   z-index: 2;
-  /* 確保標題行在上方 */
   background-color: #ffffff;
-  /* 可以選擇性地設置背景色 */
 }
 
 .table tbody td {
@@ -368,12 +318,11 @@ export default {
   vertical-align: middle;
 }
 
-/* 定義主顏色 */
 :root {
   --primary-color: #007bff;
 }
 
-/* 定義按鈕樣式 */
+
 .table button {
   border: 1px solid #5B5B5B;
   border-radius: 20px;
@@ -386,7 +335,7 @@ export default {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* 按鈕懸停時變化 */
+
 .table button:hover {
   background-color: #5B5B5B;
   color: #E0E0E0;
@@ -394,24 +343,19 @@ export default {
 
 .table button {
   margin-right: 0px;
-  /* 設定按鈕的右邊距 */
 }
 
 .actionButton {
   color: black;
   border-color: black;
   transition: color 0.3s, border-color 0.3s;
-  /* 添加過渡效果 */
 }
 
 .actionButton:hover {
   color: gray;
-  /* 滑鼠移上時改變顏色 */
 }
 
 .actionButton:active {
   color: darkgray;
-  /* 按下按鈕時改變顏色 */
 }
-
 </style>

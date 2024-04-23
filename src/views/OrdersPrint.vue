@@ -244,7 +244,7 @@ export default {
 };
 </script>
 
-  <style scoped>
+<style scoped>
 
 .subtitle {
   color: grey;
@@ -252,38 +252,23 @@ export default {
 
 .custom-link {
   background-color: transparent;
-  /* 背景透明 */
   color: black;
-  /* 文字颜色 */
-  /* padding: 7px; */
-  /* 设置内边距 */
   display: inline-block;
-  /* 让链接变成行内块元素，以便控制宽度和高度 */
   position: relative;
-  /* 使得子元素的绝对定位相对于父元素 */
   text-decoration: none;
-  /* 移除下划线 */
   transition: color 0.3s;
-  /* 添加文字颜色的过渡效果 */
-  /* top: 10px; */
 }
 
 .custom-link:hover {
   color: gray;
-  /* 鼠标移上去时文字颜色变为灰色 */
 }
 
 .custom-link b-icon {
   display: block;
-  /* 将图标变为块级元素 */
   position: absolute;
-  /* 绝对定位，以便于控制位置 */
   top: -10px;
-  /* 将图标上移 */
   left: 50%;
-  /* 水平居中 */
   transform: translateX(-50%);
-  /* 水平居中 */
 }
 
 .btn-outline-dark {
@@ -291,21 +276,16 @@ export default {
   top: 160px;
   right: 105px;
   margin: 10px;
-  /* 调整按钮与表格的间距 */
 }
 
 .modal-header {
   position: relative;
-  /* 使得 .modal-header 成为定位上下文 */
 }
 
 .close {
   position: absolute;
-  /* 相对于 .modal-header 定位 */
   top: 10px;
-  /* 调整关闭按钮与顶部的距离 */
   right: 10px;
-  /* 调整关闭按钮与右侧的距离 */
 }
 
 .table2 {
@@ -325,12 +305,10 @@ export default {
   white-space: nowrap;
 }
 
-/* 定義主顏色 */
 :root {
   --primary-color: #007bff;
 }
 
-/* 定義按鈕樣式 */
 .table button {
   border: 1px solid var(--primary-color);
   border-radius: 20px;
@@ -343,7 +321,6 @@ export default {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* 按鈕懸停時變化 */
 .table button:hover {
   background-color: var(--primary-color);
   color: #fff;
@@ -351,15 +328,6 @@ export default {
 
 .table button {
   margin-right: 0px;
-  /* 設定按鈕的右邊距 */
 }
 
-/*
-.table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 2; 確保標題行在上方
-  background-color: #fff; 可以選擇性地設置背景色
-}
-*/
 </style>

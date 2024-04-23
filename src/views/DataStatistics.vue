@@ -1,8 +1,4 @@
 <template>
-  <!--  <main class="h-100" style="background-color: #eee">-->
-  <!--    <h1>Statistics</h1>-->
-  <!--  </main>-->
-
   <div class="chart-container">
     <div class="chart1">
       <canvas id="genderPieChart" width="400" height="400"></canvas>
@@ -11,26 +7,11 @@
       <canvas id="ageChart"></canvas>
     </div>
   </div>
-
   <div class="chart-container">
     <div class="chart1">
       <canvas id="productSalesChart" width="800" height="400"></canvas>
     </div>
   </div>
-
-  <!--    <table class="table table-striped table-hover">-->
-  <!--      <thead>-->
-  <!--      <tr class="text-center">-->
-  <!--        <th scope="col">年齡</th>-->
-  <!--      </tr>-->
-  <!--      </thead>-->
-  <!--      <tbody>-->
-  <!--      <tr v-for="memberDTO in memberDTOs" :key="memberDTO.userId" class="text-center">-->
-  <!--        <td>{{ memberDTO.age }}</td>-->
-  <!--      </tr>-->
-  <!--      </tbody>-->
-  <!--    </table>-->
-
 </template>
 
 
@@ -50,7 +31,6 @@ export default {
       const role = loggedInMemberObject.authentication;
       console.log(role);
       if (role == '1' || role == '0') {
-        // alert('歡迎回來，管理者!!');
       } else {
         alert('權限不足');
         this.$router.push('/');
@@ -62,10 +42,8 @@ export default {
         .then((rs) => {
           console.log(rs.data);
           this.memberDTOs = rs.data;
-
           this.calculateGenderData();
           this.calculateAgeDistribution();
-
           this.renderGenderChart();
           this.renderAgeChart();
           this.renderSalesChart();
@@ -73,12 +51,11 @@ export default {
         .catch((error) => {
           console.error("Error fetching memberDTOs:", error);
         });
-
   },
 
   data() {
     return {
-      memberDTOs: [], // 在這裡放入您提供的用戶數據
+      memberDTOs: [],
       ageData: {
         '10~19歲': 0,
         '20~29歲': 0,
@@ -87,16 +64,7 @@ export default {
         '50~59歲': 0,
         '60~69歲': 0,
       },
-      // ageData: { //(這裡是寫死的Data)
-      //   '10~19歲': 10,
-      //   '20~29歲': 17,
-      //   '30~39歲': 19,
-      //   '40~49歲': 12,
-      //   '50~59歲': 1,
-      //   '60~69歲': 1,
-      // },
       ageChart: null
-
     };
   },
 
@@ -140,14 +108,6 @@ export default {
 
     calculateAgeDistribution() {
       const users = this.memberDTOs;
-      // {
-      //   "userId": 1,
-      //   "userName": "陳小明",
-      //   "age": 18,
-      //   "sex": 0
-      // },
-      // 這裡放入後端提供的使用者資料
-
       users.forEach(user => {
         const age = user.age;
         // console.log("user.age: " + user.age)
@@ -219,7 +179,6 @@ export default {
           "iPhone 14 256G",
           "MacBook Air 13吋 M1 晶片 256GB",
           "iPad 10 64G WIFI",
-          // "MacBook Pro 14 吋 512GB M3",
         ],
         datasets: [
           {
@@ -231,7 +190,6 @@ export default {
               "rgba(255, 206, 86, 0.2)",
               "rgba(75, 192, 192, 0.2)",
               "rgba(153, 102, 255, 0.2)",
-              // "rgba(255, 159, 64, 0.2)",
             ],
             borderColor: [
               "rgba(255, 99, 132, 1)",
@@ -239,7 +197,6 @@ export default {
               "rgba(255, 206, 86, 1)",
               "rgba(75, 192, 192, 1)",
               "rgba(153, 102, 255, 1)",
-              // "rgba(255, 159, 64, 1)",
             ],
             borderWidth: 1,
           },
@@ -267,20 +224,15 @@ export default {
         options: options,
       });
     },
-
-
   }
 };
 
 </script>
-
-
 <style scoped>
 .chart-container {
   display: flex;
   flex-direction: row;
   margin: 40px 70px;
-  //border: 1px solid #17a2b8;
 }
 
 .chart1 {

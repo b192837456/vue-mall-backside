@@ -99,7 +99,6 @@
 
   <button class="fixed-button" @click="toggleButtons">
     <i :class="iconClass"></i>
-    <!-- 使用 Font Awesome 中的 chat icon 或叉叉 icon -->
   </button>
 
   <!-- 彈出的按鈕列表 -->
@@ -160,9 +159,6 @@ export default {
             sessionStorage.setItem("loggedInMember", JSON.stringify(rs.data));
             this.$router.push("/");
           }
-
-
-
         })
         .catch(() => {
           this.message = "登入失敗";
@@ -213,44 +209,40 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 50px; /* 設置寬度和高度相等，使其呈現圓形 */
+  width: 50px;
   height: 50px;
-  border-radius: 50%; /* 圓形邊框 */
+  border-radius: 50%;
   background-color: #007bff;
   color: #fff;
   border: none;
   cursor: pointer;
-  /* 將內容居中 */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
 
-/* 調整 icon 大小 */
 .fixed-button i {
   font-size: 25px;
 }
 .sub-button {
   bottom: 20px;
   right: 20px;
-  width: 50px; /* 設置寬度和高度相等，使其呈現圓形 */
+  width: 50px;
   height: 50px;
-  border-radius: 50%; /* 圓形邊框 */
+  border-radius: 50%;
   background-color: #2784e7;
   color: #fff;
   border: none;
   cursor: pointer;
-  /* 將內容居中 */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .sub-button i {
-  font-size: 25px; /* 調整圖標大小 */
+  font-size: 25px;
 }
 
-/* 旋轉動畫 */
 .rotate {
   animation: rotateIcon 0.3s linear;
 }
@@ -264,7 +256,6 @@ export default {
   }
 }
 
-/* 按鈕列表容器 */
 .buttons-container {
   position: fixed;
   bottom: 80px;
@@ -274,24 +265,24 @@ export default {
   align-items: center;
 }
 
-.slide-enter, .slide-leave-to /* .slide-leave-active below version 2.1.8 */ {
+.slide-enter, .slide-leave-to  {
   transform: translateY(0);
   opacity: 1;
 }
 
-.slide-enter-to, .slide-leave /* .slide-enter-active below version 2.1.8 */ {
+.slide-enter-to, .slide-leave  {
   transform: translateY(-100%);
   opacity: 0;
 }
 
-/* 彈出的按鈕 */
+
 .sub-button {
   margin-top: 10px;
 }
 
 a {
-  color: inherit; /* 使用父元素的文字顏色 */
-  text-decoration: none; /* 取消下劃線 */
+  color: inherit;
+  text-decoration: none;
 }
 a:link {
   color: inherit;

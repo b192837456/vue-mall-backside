@@ -15,7 +15,6 @@
                 <router-link to="/orders" class="list-group-item list-group-item-action">訂單管理</router-link>
                 <router-link to="/statistics" class="list-group-item list-group-item-action">統計資料</router-link>
                 <router-link to="/feedback" class="list-group-item list-group-item-action">意見回饋</router-link>
-                <!-- 在這裡添加更多功能連結 -->
                 <br/>
                 <br/>
               </div>

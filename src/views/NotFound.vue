@@ -4,7 +4,6 @@
         <div class="col-md-12">
           <div>
             <img src="/not_found.jpg" style="width: 30%" />
-
             <h1>Oops!</h1>
             <div class="m-3">出了點問題...找不到你的頁面哦</div>
             <div>

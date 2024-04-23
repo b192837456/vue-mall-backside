@@ -46,9 +46,7 @@
               <button @click="openChangeModal(product)" class="actionButton">
                 <i class="fas fa-pen"></i>
               </button>
-
             </td>
-
             <td>
               <button v-if="product.salesStatus === 0" @click="changeSalesStatus(product.productId)"
                 class="actionButton">
@@ -57,18 +55,12 @@
               <button v-else @click="changeSalesStatus(product.productId)" class="actionButton">
                 <i class="fas fa-xmark"></i>
               </button>
-
             </td>
-
             <td>
               <button @click="deletedProduct(product)" class="actionButton ">
                 <i class="fas fa-trash"></i>
               </button>
-
             </td>
-
-
-
           </tr>
         </tbody>
       </table>
@@ -111,7 +103,7 @@
               <input type="text" class="form-control" id="capacity" v-model="NewProduct.capacity">
             </div>
             <div class="form-group">
-              <label for="size">銀幕尺寸:</label>
+              <label for="size">螢幕尺寸:</label>
               <input type="text" class="form-control" id="size" v-model="NewProduct.size">
             </div>
             <div class="d-flex justify-content-end"> <!-- 新添加的 div -->
@@ -159,7 +151,7 @@
               <input type="text" class="form-control" id="capacity" v-model="NewProduct.capacity">
             </div>
             <div class="form-group">
-              <label for="size">銀幕尺寸:</label>
+              <label for="size">螢幕尺寸:</label>
               <input type="text" class="form-control" id="size" v-model="NewProduct.size">
             </div>
             <div class="d-flex justify-content-end">
@@ -173,10 +165,6 @@
       </div>
     </div>
   </div>
-
-
-
-
 
 </template>
 
@@ -208,8 +196,6 @@ export default {
       },
       searchTerm: '',
       filteredProducts: [],
-
-
     };
   },
   watch: {
@@ -231,7 +217,6 @@ export default {
           .catch(error => {
             console.error('Error deleting product:', error);
           });
-
       }
     },
 
@@ -269,7 +254,6 @@ export default {
             size.includes(searchTerm) ||
             productId.includes(searchTerm);
         });
-
         console.log(this.filteredProducts);
       }
     },
@@ -301,13 +285,12 @@ export default {
       }
     },
     saveChangeProduct() {
-      // 保存产品前先显示二次确认提示
       if (confirm("您確定要保存這筆產品嗎？")) {
         console.log('New Product:', this.NewProduct);
 
         axios.put(`${this.API_URL}/products/updateProduct/${this.NewProduct.productId}`, this.NewProduct)
           .then(response => {
-            this.resetFormData(); // 清空表单数据
+            this.resetFormData();
             console.log(response.data);
             this.fetchData();
             this.closeModal();
@@ -316,7 +299,6 @@ export default {
             console.error('Error:', error);
           });
       } else {
-        // 如果用户取消保存操作，则不执行保存逻辑
         console.log('取消保存');
       }
     },
@@ -428,7 +410,6 @@ export default {
       console.log(role);
       console.log(role);
       if (role == '1' || role == '0') {
-        // alert('歡迎回來，管理者!!');
       } else {
         alert('權限不足');
         this.$router.push('/');
@@ -442,51 +423,45 @@ export default {
       .catch(error => {
         console.error('Error fetching products:', error);
       });
-
   },
 }
 </script>
 
 <style scoped>
-/* .container {
-  max-width: 95%;
-  overflow-x: auto;  啟用水平捲動
-} */
-
 .custom-link {
   background-color: transparent;
-  /* 背景透明 */
+
   color: black;
-  /* 文字颜色 */
-  /* padding: 7px; */
-  /* 设置内边距 */
+
+
+
   display: inline-block;
-  /* 让链接变成行内块元素，以便控制宽度和高度 */
+
   position: relative;
-  /* 使得子元素的绝对定位相对于父元素 */
+
   text-decoration: none;
-  /* 移除下划线 */
+
   transition: color 0.3s;
-  /* 添加文字颜色的过渡效果 */
-  /* top: 10px; */
+
+
 }
 
 .custom-link:hover {
   color: gray;
-  /* 鼠标移上去时文字颜色变为灰色 */
+
 }
 
 .custom-link b-icon {
   display: block;
-  /* 将图标变为块级元素 */
+
   position: absolute;
-  /* 绝对定位，以便于控制位置 */
+
   top: -10px;
-  /* 将图标上移 */
+
   left: 50%;
-  /* 水平居中 */
+
   transform: translateX(-50%);
-  /* 水平居中 */
+
 }
 
 .btn-outline-dark {
@@ -495,16 +470,16 @@ export default {
 
 .modal-header {
   position: relative;
-  /* 使得 .modal-header 成为定位上下文 */
+
 }
 
 .close {
   position: absolute;
-  /* 相对于 .modal-header 定位 */
+
   top: 10px;
-  /* 调整关闭按钮与顶部的距离 */
+
   right: 10px;
-  /* 调整关闭按钮与右侧的距离 */
+
 }
 
 .table-frame {
@@ -518,9 +493,9 @@ export default {
   position: sticky;
   top: 0;
   z-index: 2;
-  /* 確保標題行在上方 */
+
   background-color: #ffffff;
-  /* 可以選擇性地設置背景色 */
+
 }
 
 .table tbody td {
@@ -528,12 +503,12 @@ export default {
   vertical-align: bottom;
 }
 
-/* 定義主顏色 */
+
 :root {
   --primary-color: #007bff;
 }
 
-/* 定義按鈕樣式 */
+
 .table button {
   border: 1px solid #5B5B5B;
   border-radius: 20px;
@@ -546,7 +521,7 @@ export default {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* 按鈕懸停時變化 */
+
 .table button:hover {
   background-color: #5B5B5B;
   color: #E0E0E0;
@@ -554,23 +529,23 @@ export default {
 
 .table button {
   margin-right: 0px;
-  /* 設定按鈕的右邊距 */
+
 }
 
 .actionButton {
   color: black;
   border-color: black;
   transition: color 0.3s, border-color 0.3s;
-  /* 添加過渡效果 */
+
 }
 
 .actionButton:hover {
   color: gray;
-  /* 滑鼠移上時改變顏色 */
+
 }
 
 .actionButton:active {
   color: darkgray;
-  /* 按下按鈕時改變顏色 */
+
 }
 </style>
