@@ -3,20 +3,20 @@
     <h2>訂單明細</h2>
     <br/>
 
-    <h7 class="subtitle">
+    <h6 class="subtitle">
       訂單編號：{{ x }}<br/>
       訂購日期：{{ formatDate(y) }}<br/>
-    </h7>
+    </h6>
     <br/>
 
-<!--     移到表格外部-->
-<!--    <button-->
-<!--        type="button"-->
-<!--        class="btn btn-outline-dark"-->
-<!--        @click="redirectToOrdersPrint(x)"-->
-<!--    >-->
-<!--      列印-->
-<!--    </button>-->
+    <!--     移到表格外部-->
+    <!--    <button-->
+    <!--        type="button"-->
+    <!--        class="btn btn-outline-dark"-->
+    <!--        @click="redirectToOrdersPrint(x)"-->
+    <!--    >-->
+    <!--      列印-->
+    <!--    </button>-->
     <button
         type="button"
         class="btn btn-outline-dark"
@@ -68,12 +68,9 @@
             </button>
           </td>
           <td>
-            <button @click="deleteOrdersDetail(odDTO)">
+            <button @click="openDeleteModal(odDTO)">
               <i class="fas fa-trash"></i>
             </button>
-            <!-- <button v-else @click="changeSalesStatus(product.productId)">
-              <i class="fas fa-xmark"></i>
-            </button> -->
           </td>
         </tr>
         </tbody>
@@ -81,7 +78,7 @@
     </div>
   </main>
 
-  <!-- 新增訂單明細Modal -->
+  <!-- 新增訂單明細的Modal -->
   <div class="modal" tabindex="-1" role="dialog" ref="insertModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -159,7 +156,7 @@
     </div>
   </div>
 
-  <!-- 修改訂單明細Modal -->
+  <!-- 修改訂單明細的Modal -->
   <div class="modal" tabindex="-1" role="dialog" ref="editModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -230,6 +227,49 @@
     </div>
   </div>
 
+  <!-- 刪除訂單明細的Modal -->
+  <div class="modal" tabindex="-1" role="dialog" ref="deleteModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              @click="closeDeleteModal"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">刪除訂單明細</h5>
+        </div>
+
+        <div class="modal-body">
+
+
+          <form>
+            <div class="form-group">
+              <h6>您確定要刪除這筆明細嗎？</h6>
+            </div>
+
+            <br/>
+            <div class="d-flex justify-content-end">
+              <!-- 新添加的 div -->
+              <button
+                  type="button"
+                  class="btn btn-primary ml-2"
+                  @click="deleteOrdersDetail()"
+              >
+                確定
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+
 </template>
 
 <script>
@@ -252,6 +292,20 @@ export default {
         quantity: '',
         price: '',
       },
+      deletedOrdersDetailDTO: {
+        orderId: '',
+        userName: '',
+        ordersDetailI: '',
+        productNam: '',
+        specId: '',
+        color: '',
+        quantity: '',
+        price: '',
+        orderDate: '',
+        orderStatus: '',
+        deliverAddress: '',
+        recipientPhone: '',
+      },
     };
   },
 
@@ -272,7 +326,7 @@ export default {
       doc.autoTable({
         html: table,
         startY: 20, // 表格的起始Y座標
-        margin: { top: 20 }, // 表格的邊距
+        margin: {top: 20}, // 表格的邊距
         styles: {
           font: "ArialUnicodeMS",
           //這裏設置字體樣式
@@ -360,60 +414,50 @@ export default {
     },
 
     saveOrdersDetail() {
-      if (confirm("您確定要儲存這項資料嗎？")) {
-        this.NewOrdersDetail.orderId = this.x
-        console.log('New OrdersDetail:', this.NewOrdersDetail);
-        axios.post(`${this.API_URL}/orders/insertOrdersDetail`, this.NewOrdersDetail)
-            .then(response => {
-              this.resetFormData(); //清空表單數據
-              console.log(response.data);
-              // this.fetchData(); //→這句的目的是什麼？
-              this.closeInsertModal();
-              this.$router.go();
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-      } else {
-        // 如果用戶取消保存操作，則不執行保存邏輯
-        console.log('取消保存');
-      }
+      this.NewOrdersDetail.orderId = this.x
+      console.log('New OrdersDetail:', this.NewOrdersDetail);
+      axios.post(`${this.API_URL}/orders/insertOrdersDetail`, this.NewOrdersDetail)
+          .then(response => {
+            this.resetFormData(); //清空表單數據
+            console.log(response.data);
+            // this.fetchData(); //→這句的目的是什麼？
+            this.closeInsertModal();
+            this.$router.go();
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
     },
 
     saveEditedOrdersDetail() {
-      if (confirm("您確定要儲存這次的編輯嗎？")) {
-        this.NewOrdersDetail.orderId = this.x
-        console.log('New OrdersDetail:', this.NewOrdersDetail);
-        axios
-            .put(`${this.API_URL}/orders/updateOrdersDetail/${this.NewOrdersDetail.ordersDetailId}`, this.NewOrdersDetail)
-            .then((response) => {
-              this.resetFormData(); //清空表單數據
-              console.log(response.data);
-              // this.fetchData();
-              this.closeEditModal();
-              this.$router.go();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-      } else {
-        // 如果用戶取消保存操作，則不執行保存邏輯
-        console.log("取消保存");
-      }
+      this.NewOrdersDetail.orderId = this.x
+      console.log('New OrdersDetail:', this.NewOrdersDetail);
+      axios
+          .put(`${this.API_URL}/orders/updateOrdersDetail/${this.NewOrdersDetail.ordersDetailId}`, this.NewOrdersDetail)
+          .then((response) => {
+            this.resetFormData(); //清空表單數據
+            console.log(response.data);
+            // this.fetchData();
+            this.closeEditModal();
+            this.$router.go();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     },
 
-    deleteOrdersDetail(odDTO) {
-      if (confirm("您確定要刪除這筆明細嗎？")) {
-        axios.delete(`${this.API_URL}/orders/deleteOrdersDetail/${odDTO.ordersDetailId}`)
-            .then(response => {
-              this.ordersDetailDTOs = this.ordersDetailDTOs.filter(ordersDetail => ordersDetail !== odDTO);
-              console.log('刪除成功');
-              this.$router.go();
-            })
-            .catch(error => {
-              console.error('Error deleting product:', error);
-            });
-      }
+    deleteOrdersDetail() {
+      // console.log('before 刪除');
+      axios.delete(`${this.API_URL}/orders/deleteOrdersDetail/${this.deletedOrdersDetailDTO.ordersDetailId}`)
+          .then(() => {
+            this.ordersDetailDTOs = this.ordersDetailDTOs.filter(ordersDetail => ordersDetail !== this.deletedOrdersDetailDTO);
+            console.log('刪除成功');
+            this.closeDeleteModal();
+            // this.$router.go();
+          })
+          .catch(error => {
+            console.error('Error deleting ordersDetail:', error);
+          });
     },
 
     resetFormData() {
@@ -455,6 +499,20 @@ export default {
       document.body.classList.remove("modal-open");
       this.resetFormData();
     },
+
+    openDeleteModal(odDTO) {
+      this.$refs.deleteModal.classList.add("show");
+      this.$refs.deleteModal.style.display = "block";
+      document.body.classList.add("modal-open");
+      this.deletedOrdersDetailDTO = odDTO;
+    },
+
+    closeDeleteModal() {
+      this.$refs.deleteModal.classList.remove("show");
+      this.$refs.deleteModal.style.display = "none";
+      document.body.classList.remove("modal-open");
+    },
+
   },
 
   mounted() {
@@ -547,12 +605,9 @@ export default {
 }
 
 .close {
-  position: absolute;
-  /* 相对于 .modal-header 定位 */
-  top: 10px;
-  /* 调整关闭按钮与顶部的距离 */
-  right: 10px;
-  /* 调整关闭按钮与右侧的距离 */
+  position: absolute; /* 相对于 .modal-header 定位 */
+  top: 10px; /* 调整关闭按钮与顶部的距离 */
+  right: 10px; /* 调整关闭按钮与右侧的距离 */
 }
 
 .table-frame {

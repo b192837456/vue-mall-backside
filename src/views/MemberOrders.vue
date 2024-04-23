@@ -421,7 +421,7 @@ export default {
       doc.autoTable({
         html: table,
         startY: 20, // 表格的起始Y座標
-        margin: { top: 20 }, // 表格的邊距
+        margin: {top: 20}, // 表格的邊距
         styles: {
           font: "ArialUnicodeMS",
           //這裏設置字體樣式
@@ -494,7 +494,6 @@ export default {
       return dateTime.toLocaleString("zh-TW", options);
     },
 
-
     search() {
       // 根據搜索條件過濾訂單列表
       if (this.searchTerm.trim() === "") {
@@ -526,62 +525,51 @@ export default {
     },
 
     demoInsertModal() {
-      this.NewOrder.userId = "3";
-      this.NewOrder.orderDate = "2024-04-19";
+      this.NewOrder.userId = "2";
+      this.NewOrder.orderDate = "2024-04-26";
       this.NewOrder.paymentMethod = "Paypal";
       this.NewOrder.orderStatus = "處理中";
-      this.NewOrder.deliverDate = "2024-04-19";
-      this.NewOrder.pickupDate = "2024-04-19";
-      this.NewOrder.deliverAddress = "台南市永康區南台街1號";
-      this.NewOrder.recipientName = "林小明";
+      this.NewOrder.deliverDate = "2024-04-26";
+      this.NewOrder.pickupDate = "2024-04-26";
+      this.NewOrder.deliverAddress = "台北市信義區公園南路123號";
+      this.NewOrder.recipientName = "王小明";
       this.NewOrder.recipientPhone = "0911222333";
-      this.NewOrder.paymentTime = "2024-04-19";
+      this.NewOrder.paymentTime = "2024-04-26";
     },
 
     saveOrder() {
-      if (confirm("您確定要儲存這項資料嗎？")) {
-        console.log("New Order:", this.NewOrder);
-
-        axios
-            .post(`${this.API_URL}/orders/insertOrders`, this.NewOrder)
-            .then((response) => {
-              this.resetFormData(); //清空表單數據
-              console.log(response.data);
-              // this.fetchData();
-              this.closeInsertModal();
-              this.$router.go();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-      } else {
-        // 如果用戶取消保存操作，則不執行保存邏輯
-        console.log("取消保存");
-      }
+      console.log("New Order:", this.NewOrder);
+      axios
+          .post(`${this.API_URL}/orders/insertOrders`, this.NewOrder)
+          .then((response) => {
+            this.resetFormData(); //清空表單數據
+            console.log(response.data);
+            // this.fetchData();
+            this.closeInsertModal();
+            this.$router.go();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     },
 
     saveEditedOrder() {
-      if (confirm("您確定要儲存這次的編輯嗎？")) {
-        console.log("New Order:", this.NewOrder);
-        axios
-            .put(
-                `${this.API_URL}/orders/updateOrder/${this.NewOrder.orderId}`,
-                this.NewOrder
-            )
-            .then((response) => {
-              this.resetFormData(); //清空表單數據
-              console.log(response.data);
-              // this.fetchData();
-              this.closeEditModal();
-              this.$router.go();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-      } else {
-        // 如果用戶取消保存操作，則不執行保存邏輯
-        console.log("取消保存");
-      }
+      console.log("New Order:", this.NewOrder);
+      axios
+          .put(
+              `${this.API_URL}/orders/updateOrder/${this.NewOrder.orderId}`,
+              this.NewOrder
+          )
+          .then((response) => {
+            this.resetFormData(); //清空表單數據
+            console.log(response.data);
+            // this.fetchData();
+            this.closeEditModal();
+            this.$router.go();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     },
 
     // updateOrderStatus(specifiedOrderId, newStatus) {
