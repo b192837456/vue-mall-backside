@@ -262,6 +262,10 @@ export default {
     },
 
     redirectToSpec(product) {
+      sessionStorage.setItem('productId', product.productId);
+      sessionStorage.setItem('x', product.productId);
+      sessionStorage.setItem('y', product.productName);
+      sessionStorage.setItem('z', product.price);
       this.$router.push({
         path: 'Spec',
         query: {

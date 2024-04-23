@@ -46,80 +46,7 @@
     </table>
   </div>
   </main>
-  <!-- Modal -->
-  <!-- <div class="modal" tabindex="-1" role="dialog" ref="modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">用戶明細</h5>
-          <button type="button" class="close" aria-label="Close" @click="closeModal">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="userId" style="font-size: larger;">用戶編號: {{ newMember.userId }}</label>
-            </div>
-            <div class="form-group">
-              <label>第三方資訊:</label>
-              <br />
-              <ul class="list-unstyled">
-                <li v-if="!newMember.thirdParty || newMember.thirdParty.length === 0" style="color: red;">未綁定</li>
-                <li v-else v-for="(provider, index) in newMember.thirdParty" :key="index">
-                  <div>
-                    <label for="providerId">提供者ID:</label>
-                    <input type="text" class="form-control" :id="'providerId' + index" v-model="provider.providerId"
-                      readonly>
-                  </div>
-                  <div>
-                    <label for="providerName">提供者名稱:</label>
-                    <input type="text" class="form-control" :id="'providerName' + index" v-model="provider.providerName"
-                      readonly>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <label for="userName">用戶名稱:</label>
-              <input type="text" class="form-control" id="userName" v-model="newMember.userName">
-            </div>
-            <div class="form-group">
-              <label for="phone">電話:</label>
-              <input type="text" class="form-control" id="phone" v-model="newMember.phone">
-            </div>
-            <div class="form-group">
-              <label for="email">E-mail:</label>
-              <input type="text" class="form-control" id="email" v-model="newMember.email">
-            </div>
-            <div class="form-group">
-              <label for="lastLoginTime">最新登入時間:</label>
-              <input type="text" class="form-control" id="lastLoginTime" :value="formatDate(newMember.lastLoginTime)"
-                readonly>
-            </div>
-            <div class="form-group">
-              <label for="registerDate">註冊時間:</label>
-              <input type="text" class="form-control" id="registerDate" :value="formatDate(newMember.registerDate)"
-                readonly>
-            </div>
-            <div class="form-group">
-              <label for="userAddress">用戶地址:</label>
-              <input type="text" class="form-control" id="userAddress" v-model="newMember.userAddress">
-            </div>
-            <div class="form-group">
-              <label for="deliverAddress">預設運送地址:</label>
-              <input type="text" class="form-control" id="deliverAddress" v-model="newMember.deliverAddress">
-            </div>
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-secondary mr-2" @click="closeModal">Close</button>
-              <button type="button" class="btn btn-primary" @click="saveProduct">Save</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <!-- Modal -->
+
   <div class="modal" tabindex="-1" role="dialog" ref="modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -242,6 +169,9 @@ export default {
             
 
             this.getfeedbacks();
+            this.hideLoadingAnimation();
+
+
 
           })
           .catch((error) => {

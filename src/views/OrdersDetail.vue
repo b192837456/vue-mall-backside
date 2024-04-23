@@ -9,14 +9,6 @@
     </h6>
     <br/>
 
-    <!--     移到表格外部-->
-    <!--    <button-->
-    <!--        type="button"-->
-    <!--        class="btn btn-outline-dark"-->
-    <!--        @click="redirectToOrdersPrint(x)"-->
-    <!--    >-->
-    <!--      列印-->
-    <!--    </button>-->
     <button
         type="button"
         class="btn btn-outline-dark"
