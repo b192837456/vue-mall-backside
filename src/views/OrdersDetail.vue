@@ -9,6 +9,14 @@
     </h6>
     <br/>
 
+    <!--     移到表格外部-->
+    <!--    <button-->
+    <!--        type="button"-->
+    <!--        class="btn btn-outline-dark"-->
+    <!--        @click="redirectToOrdersPrint(x)"-->
+    <!--    >-->
+    <!--      列印-->
+    <!--    </button>-->
     <button
         type="button"
         class="btn btn-outline-dark"
@@ -196,6 +204,7 @@
             </div>
             <br/>
             <div class="d-flex justify-content-end">
+              <!-- 新添加的 div -->
               <button
                   type="button"
                   class="btn btn-secondary"
@@ -235,6 +244,8 @@
         </div>
 
         <div class="modal-body">
+
+
           <form>
             <div class="form-group">
               <h6>您確定要刪除這筆明細嗎？</h6>
@@ -266,7 +277,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ArialUnicodeMS from "../assets/fonts/ArialUnicodeMS.ttf";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx"; // 使用具名導入方式
 
 export default {
   data() {
@@ -372,6 +383,17 @@ export default {
         console.log(link);
       }
     },
+
+    // redirectToOrdersPrint(x) {
+    //   sessionStorage.setItem('x', x);
+    //   console.log(x)
+    //   this.$router.push({
+    //     path: "/orders/print",
+    //     query: {
+    //       xOrderId: x,
+    //     },
+    //   });
+    // },
 
     formatDate(dateTimeString) {
       const options = {
@@ -542,50 +564,50 @@ export default {
 
 .custom-link {
   background-color: transparent;
-
+  /* 背景透明 */
   color: black;
-
-
-
+  /* 文字颜色 */
+  /* padding: 7px; */
+  /* 设置内边距 */
   display: inline-block;
-
+  /* 让链接变成行内块元素，以便控制宽度和高度 */
   position: relative;
-
+  /* 使得子元素的绝对定位相对于父元素 */
   text-decoration: none;
-
+  /* 移除下划线 */
   transition: color 0.3s;
-
-
+  /* 添加文字颜色的过渡效果 */
+  /* top: 10px; */
 }
 
 .custom-link:hover {
   color: gray;
-
+  /* 鼠标移上去时文字颜色变为灰色 */
 }
 
 .custom-link b-icon {
   display: block;
-
+  /* 将图标变为块级元素 */
   position: absolute;
-
+  /* 绝对定位，以便于控制位置 */
   top: -10px;
-
+  /* 将图标上移 */
   left: 50%;
-
+  /* 水平居中 */
   transform: translateX(-50%);
-
+  /* 水平居中 */
 }
 
 .btn-outline-dark {
-  float: right;
-  margin-left: 10px;
+  float: right; /* 讓按鈕靠右浮動 */
+  margin-left: 10px; /* 調整按鈕間距 */
   margin-bottom: 10px;
 }
 
 .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: absolute; /* 相对于 .modal-header 定位 */
+  top: 10px; /* 调整关闭按钮与顶部的距离 */
+  right: 10px; /* 调整关闭按钮与右侧的距离 */
 }
 
 .table-frame {
@@ -598,7 +620,7 @@ export default {
   white-space: nowrap;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 2; /* 確保標題行在上方 */
 }
 
 .table tbody td {
@@ -606,12 +628,12 @@ export default {
   vertical-align: bottom;
 }
 
-
+/* 定義主顏色 */
 :root {
   --primary-color: #007bff;
 }
 
-
+/* 定義按鈕樣式 */
 .table button {
   border: 1px solid #5B5B5B;
   border-radius: 20px;
@@ -622,58 +644,58 @@ export default {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  margin-right: 0px;
+  margin-right: 0px; /* 設定按鈕的右邊距 */
 }
 
-
+/* 按鈕懸停時變化 */
 .table button:hover {
   background-color: #5B5B5B;
   color: #E0E0E0;
 }
 
 .modal {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(0.2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  backdrop-filter: blur(0.2px); /* 背景模糊效果 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
 }
 
 .modal-header {
-  background-color: #E0E0E0;
-  position: relative;
+  background-color: #E0E0E0; /* 淺灰色背景 */
+  position: relative; /* 使得 .modal-header 成为定位上下文 */
 }
 
 .modal-title {
-  font-weight: bold;
+  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
 }
 
 .modal-body {
-  font-weight: bold;
+  font-weight: bold; /* 將 modal 內容文字設置為粗體 */
 }
 
 .modal-footer {
-  background-color: #E0E0E0;
+  background-color: #E0E0E0; /* 淺灰色背景 */
 }
 
 .modal button {
-  background-color: #FFFFFF;
-  color: #000000;
-  border: 1.5px solid #000000;
-  border-radius: 5px;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  margin-left: 5px;
+  background-color: #FFFFFF; /* 使用主顏色 */
+  color: #000000; /* 文字顏色 */
+  border: 1.5px solid #000000; /* 邊框 */
+  border-radius: 5px; /* 圓角 */
+  padding: 6px 10px; /* 調整內邊距 */
+  cursor: pointer; /* 滑鼠指標 */
+  transition: background-color 0.3s, color 0.3s; /* 添加過渡效果 */
+  margin-left: 5px; /* 調整按鈕間距 */
 }
 
 .modal button:hover {
-  background-color: #000000;
+  background-color: #000000; /* 按鈕懸停時的背景顏色 */
   color: #FFFFFF;
 }
 
 .form-control {
-  border-width: 1.5px;
-  border-style: solid;
-  border-color: #ADADAD;
+  border-width: 1.5px; /* 設置邊框寬度為 2px */
+  border-style: solid; /* 使用實線邊框 */
+  border-color: #ADADAD; /* 設置邊框顏色 */
 }
 
 </style>

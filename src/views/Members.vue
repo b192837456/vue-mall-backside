@@ -37,6 +37,7 @@
             <td>
               <button v-if="member.authentication == 2" @click="ban(member)">
                 <i class="fa-solid fa-ban"></i></button>
+              
               <button v-else @click="unban(member)">
                 <i class="fa-solid fa-arrow-rotate-left"></i></button>
             </td>
@@ -189,6 +190,7 @@ export default {
       axios.put(`${this.API_URL}/user/banUser?id=${member.userId}`).then((rs) => {
         console.log(rs.data);
         this.getmemebers();
+        this.$router.go(0);
       })
     },
     unban(member) {
