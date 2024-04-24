@@ -107,6 +107,7 @@
               <input type="text" class="form-control" id="size" v-model="NewProduct.size">
             </div>
             <div class="d-flex justify-content-end"> <!-- 新添加的 div -->
+              <button type="button" class="transparent-button" @click="demo"></button>
               <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
               <button type="submit" class="btn btn-outline-dark ml-2" @click="saveProduct">Save</button>
             </div>
@@ -397,6 +398,14 @@ export default {
         loadingDiv.parentNode.removeChild(loadingDiv);
       }
     },
+    demo(){
+      this.NewProduct.productId = 'A9999'
+      this.NewProduct.productName = 'iphone 99'
+      this.NewProduct.productDescription = '來自未來的新型手機'
+      this.NewProduct.price = 999999
+      this.NewProduct.capacity = '999G'
+      this.NewProduct.size = '9吋'  
+    }
   },
   created() {
     const loggedInMember = sessionStorage.getItem('loggedInMember');
@@ -547,5 +556,23 @@ export default {
 .actionButton:active {
   color: darkgray;
 
+}
+.transparent-button {
+  background-color: transparent; /* 背景顏色設為透明 */
+  border: none; /* 移除邊框 */
+  color: inherit; /* 文字顏色繼承父元素的顏色 */
+  cursor: pointer; /* 指示該元素是一個可點擊的按鈕 */
+  padding: 8px 16px; /* 添加內邊距，使按鈕更易於點擊 */
+  font-size: 16px; /* 設置字體大小 */
+  text-decoration: none; /* 移除下劃線 */
+  transition: background-color 0.3s ease; /* 添加過渡效果，使按鈕顏色變化更加平滑 */
+}
+
+.transparent-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* 當滑鼠移動到按鈕上時，添加一個淡淡的背景色 */
+}
+
+.transparent-button:focus {
+  outline: none; /* 移除點擊時的外框線 */
 }
 </style>
